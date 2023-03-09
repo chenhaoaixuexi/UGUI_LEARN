@@ -5,7 +5,7 @@ namespace UnityEngine.UI
     /// <summary>
     ///   This element is capable of being masked out.
     /// </summary>
-    public interface IMaskable
+    public interface IMaskable //! 配合 UnityEngine.UI.MaskUtilities.NotifyStencilStateChanged 使用
     {
         /// <summary>
         /// Recalculate masking for this element and all children elements.

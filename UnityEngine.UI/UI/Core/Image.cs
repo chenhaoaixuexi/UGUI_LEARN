@@ -819,6 +819,7 @@ namespace UnityEngine.UI
                 return;
             }
 
+            //! 对不同 fill type的处理
             switch (type)
             {
                 case Type.Simple:
@@ -967,8 +968,10 @@ namespace UnityEngine.UI
         static readonly Vector2[] s_VertScratch = new Vector2[4];
         static readonly Vector2[] s_UVScratch = new Vector2[4];
 
+        //! 处理 UnityEngine.UI.Image.Type.Sliced (九宫格)类型的 图片
         private void GenerateSlicedSprite(VertexHelper toFill)
         {
+            //! 无边框直接走 GenerateSimpleSprite
             if (!hasBorder)
             {
                 GenerateSimpleSprite(toFill, false);
@@ -977,6 +980,7 @@ namespace UnityEngine.UI
 
             Vector4 outer, inner, padding, border;
 
+            //! 获取 out-UV、inner-UI、padding 和 border
             if (activeSprite != null)
             {
                 outer = Sprites.DataUtility.GetOuterUV(activeSprite);
@@ -991,6 +995,8 @@ namespace UnityEngine.UI
                 padding = Vector4.zero;
                 border = Vector4.zero;
             }
+            //! 给静态变量s_UVScratch、s_VertScratch 赋值 UV值和Vertx值
+            #region UV Vertx逻辑
 
             Rect rect = GetPixelAdjustedRect();
             Vector4 adjustedBorders = GetAdjustedBorders(border / pixelsPerUnit, rect);
@@ -1016,19 +1022,20 @@ namespace UnityEngine.UI
             s_UVScratch[2] = new Vector2(inner.z, inner.w);
             s_UVScratch[3] = new Vector2(outer.z, outer.w);
 
+            #endregion
+
             toFill.Clear();
 
-            for (int x = 0; x < 3; ++x)
+            //! 遍历9个格子
+            for (int x = 0; x < 3; ++x) //! x: 0 1 2
             {
-                int x2 = x + 1;
-
-                for (int y = 0; y < 3; ++y)
+                int x2 = x + 1; //! may 1,2,3
+                for (int y = 0; y < 3; ++y)//! y: 0 1 2
                 {
                     if (!m_FillCenter && x == 1 && y == 1)
                         continue;
 
-                    int y2 = y + 1;
-
+                    int y2 = y + 1; //! may 1,2,3
 
                     AddQuad(toFill,
                         new Vector2(s_VertScratch[x].x, s_VertScratch[y].y),
@@ -1315,7 +1322,7 @@ namespace UnityEngine.UI
         {
             Rect originalRect = rectTransform.rect;
 
-            for (int axis = 0; axis <= 1; axis++)
+            for (int axis/*0,1*/ = 0; axis <= 1; axis++)
             {
                 float borderScaleRatio;
 
@@ -1323,11 +1330,12 @@ namespace UnityEngine.UI
                 // may be slightly larger than the original rect.
                 // Adjust the border to match the adjustedRect to avoid
                 // small gaps between borders (case 833201).
+                // 计算边框缩放比例，用于根据像素调整后的矩形大小来调整原始矩形的边框宽度。这样可以避免在边框之间出现小缝隙（case 833201）
                 if (originalRect.size[axis] != 0)
                 {
                     borderScaleRatio = adjustedRect.size[axis] / originalRect.size[axis];
                     border[axis] *= borderScaleRatio;
-                    border[axis + 2] *= borderScaleRatio;
+                    border[axis + 2/*2,3*/] *= borderScaleRatio;
                 }
 
                 // If the rect is smaller than the combined borders, then there's not room for the borders at their normal size.
@@ -1337,7 +1345,7 @@ namespace UnityEngine.UI
                 {
                     borderScaleRatio = adjustedRect.size[axis] / combinedBorders;
                     border[axis] *= borderScaleRatio;
-                    border[axis + 2] *= borderScaleRatio;
+                    border[axis + 2/*2,3*/] *= borderScaleRatio;
                 }
             }
             return border;
@@ -1733,6 +1741,7 @@ namespace UnityEngine.UI
         /// <remarks> Also see See:ICanvasRaycastFilter.</remarks>
         public virtual bool IsRaycastLocationValid(Vector2 screenPoint, Camera eventCamera)
         {
+            //! 小于0的alpha  在射线检测中 不通过
             if (alphaHitTestMinimumThreshold <= 0)
                 return true;
 

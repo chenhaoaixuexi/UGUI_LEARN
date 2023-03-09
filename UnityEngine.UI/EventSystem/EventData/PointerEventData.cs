@@ -67,7 +67,7 @@ namespace UnityEngine.EventSystems
         /// <summary>
         /// The raw GameObject for the last press event. This means that it is the 'pressed' GameObject even if it can not receive the press event itself.
         /// </summary>
-        public GameObject lastPress { get; private set; }
+        public GameObject lastPress { get; private set; } //! 设置 UnityEngine.EventSystems.PointerEventData.pointerPress 时赋值
 
         /// <summary>
         /// The object that the press happened on even if it can not handle the press event.
@@ -130,8 +130,9 @@ namespace UnityEngine.EventSystems
         public Vector3 worldNormal { get; set; }
 
         /// <summary>
-        /// The last time a click event was sent. Used for double click
+        /// ! The last time a click event was sent. Used for double click
         /// </summary>
+        //! 原生自带的双击实现
         public float clickTime { get; set; }
 
         /// <summary>
@@ -181,6 +182,7 @@ namespace UnityEngine.EventSystems
         /// </summary>
         public InputButton button { get; set; }
 
+        //! 唯一 调用 的点: UnityEngine.EventSystems.PointerInputModule.GetPointerData
         public PointerEventData(EventSystem eventSystem) : base(eventSystem)
         {
             eligibleForClick = false;

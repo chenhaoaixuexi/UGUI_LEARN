@@ -271,7 +271,7 @@ namespace UnityEngine.UI
         /// Add a single vertex to the stream.
         /// </summary>
         /// <param name="v">The vertex to add</param>
-        public void AddVert(UIVertex v)
+        public void AddVert(UIVertex v) //! 只有 UnityEngine.UI.InputField.GenerateHighlight 中调用了当前方法
         {
             AddVert(v.position, v.color, v.uv0, v.uv1, v.normal, v.tangent);
         }
@@ -295,6 +295,7 @@ namespace UnityEngine.UI
         /// Add a quad to the stream.
         /// </summary>
         /// <param name="verts">4 Vertices representing the quad.</param>
+        //! 它可以向一个 VertexHelper 对象中添加一个四边形的顶点数据1。这个方法可以用于生成 UI 的网格2。你可以通过传入一个 UIVertex 类型的参数来指定四边形的位置、颜色、法线、切线和 UV 坐标3。
         public void AddUIVertexQuad(UIVertex[] verts)
         {
             int startIndex = currentVertCount;

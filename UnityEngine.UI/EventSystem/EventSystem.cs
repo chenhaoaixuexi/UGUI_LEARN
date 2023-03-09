@@ -11,8 +11,11 @@ namespace UnityEngine.EventSystems
     /// Handles input, raycasting, and sending events.
     /// </summary>
     /// <remarks>
-    /// The EventSystem is responsible for processing and handling events in a Unity scene. A scene should only contain one EventSystem. The EventSystem works in conjunction with a number of modules and mostly just holds state and delegates functionality to specific, overrideable components.
-    /// When the EventSystem is started it searches for any BaseInputModules attached to the same GameObject and adds them to an internal list. On update each attached module receives an UpdateModules call, where the module can modify internal state. After each module has been Updated the active module has the Process call executed.This is where custom module processing can take place.
+    /// The EventSystem is responsible for processing and handling events in a Unity scene.
+    /// A scene should only contain one EventSystem.
+    /// The EventSystem works in conjunction with a number of modules and mostly just holds state and delegates functionality to specific, overrideable components.
+    /// When the EventSystem is started it searches for any BaseInputModules attached to the same GameObject and adds them to an internal list.
+    /// On update each attached module receives an UpdateModules call, where the module can modify internal state. After each module has been Updated the active module has the Process call executed.This is where custom module processing can take place.
     /// </remarks>
     public class EventSystem : UIBehaviour
     {
@@ -20,6 +23,7 @@ namespace UnityEngine.EventSystems
 
         private BaseInputModule m_CurrentInputModule;
 
+        //! 在UnityEngine.EventSystems.EventSystem.OnEnable 时增加
         private  static List<EventSystem> m_EventSystems = new List<EventSystem>();
 
         /// <summary>
@@ -50,7 +54,7 @@ namespace UnityEngine.EventSystems
         /// <summary>
         /// Should the EventSystem allow navigation events (move / submit / cancel).
         /// </summary>
-        public bool sendNavigationEvents
+        public bool sendNavigationEvents //! 默认为 true
         {
             get { return m_sendNavigationEvents; }
             set { m_sendNavigationEvents = value; }
@@ -67,7 +71,7 @@ namespace UnityEngine.EventSystems
             get { return m_DragThreshold; }
             set { m_DragThreshold = value; }
         }
-
+        //! 在  UnityEngine.EventSystems.EventSystem.SetSelectedGameObject 中赋值
         private GameObject m_CurrentSelected;
 
         /// <summary>
@@ -111,7 +115,7 @@ namespace UnityEngine.EventSystems
         /// </remarks>
         public bool isFocused
         {
-            get { return m_HasFocus; }
+            get { return m_HasFocus; }//! 和 OnApplicationFocus 回调有关
         }
 
         protected EventSystem()
@@ -139,6 +143,7 @@ namespace UnityEngine.EventSystems
         /// </summary>
         public bool alreadySelecting
         {
+            //! 这种情况可以 yield 一帧
             get { return m_SelectionGuard; }
         }
 
@@ -163,9 +168,9 @@ namespace UnityEngine.EventSystems
             }
 
             // Debug.Log("Selection: new (" + selected + ") old (" + m_CurrentSelected + ")");
-            ExecuteEvents.Execute(m_CurrentSelected, pointer, ExecuteEvents.deselectHandler);
+            ExecuteEvents.Execute(m_CurrentSelected, pointer, ExecuteEvents.deselectHandler);//!唯一触发 onDeselect 事件的地方
             m_CurrentSelected = selected;
-            ExecuteEvents.Execute(m_CurrentSelected, pointer, ExecuteEvents.selectHandler);
+            ExecuteEvents.Execute(m_CurrentSelected, pointer, ExecuteEvents.selectHandler); //! 唯一触发 onSelect 事件的地方
             m_SelectionGuard = false;
         }
 
@@ -185,17 +190,20 @@ namespace UnityEngine.EventSystems
         /// Set the object as selected. Will send an OnDeselect the the old selected object and OnSelect to the new selected object.
         /// </summary>
         /// <param name="selected">GameObject to select.</param>
-        public void SetSelectedGameObject(GameObject selected)
+        public void SetSelectedGameObject(GameObject selected) //! 会触发 onSelect 和 onDeselect 事件
         {
             SetSelectedGameObject(selected, baseEventDataCache);
         }
 
+        //! 射线检测顺序的核心!!
         private static int RaycastComparer(RaycastResult lhs, RaycastResult rhs)
         {
-            if (lhs.module != rhs.module)
+            //! 所属的 BaseRaycaster 不一样
+            if (lhs.module/*BaseRaycaster*/ != rhs.module)
             {
                 var lhsEventCamera = lhs.module.eventCamera;
                 var rhsEventCamera = rhs.module.eventCamera;
+                //! 比较 所属的camera的 depth
                 if (lhsEventCamera != null && rhsEventCamera != null && lhsEventCamera.depth != rhsEventCamera.depth)
                 {
                     // need to reverse the standard compareTo
@@ -207,9 +215,10 @@ namespace UnityEngine.EventSystems
                     return -1;
                 }
 
+                //! 比较sortOrderPriority
                 if (lhs.module.sortOrderPriority != rhs.module.sortOrderPriority)
                     return rhs.module.sortOrderPriority.CompareTo(lhs.module.sortOrderPriority);
-
+                //! 比较renderOrderPriority
                 if (lhs.module.renderOrderPriority != rhs.module.renderOrderPriority)
                     return rhs.module.renderOrderPriority.CompareTo(lhs.module.renderOrderPriority);
             }
@@ -225,13 +234,16 @@ namespace UnityEngine.EventSystems
             if (lhs.sortingOrder != rhs.sortingOrder)
                 return rhs.sortingOrder.CompareTo(lhs.sortingOrder);
 
+            //! 比较 depth
             // comparing depth only makes sense if the two raycast results have the same root canvas (case 912396)
             if (lhs.depth != rhs.depth && lhs.module.rootRaycaster == rhs.module.rootRaycaster)
                 return rhs.depth.CompareTo(lhs.depth);
 
+            //! 比较距离
             if (lhs.distance != rhs.distance)
                 return lhs.distance.CompareTo(rhs.distance);
 
+            //! 最终比较命中的前后顺序
             return lhs.index.CompareTo(rhs.index);
         }
 
@@ -242,6 +254,7 @@ namespace UnityEngine.EventSystems
         /// </summary>
         /// <param name="eventData">Current pointer data.</param>
         /// <param name="raycastResults">List of 'hits' to populate.</param>
+        //! 似乎是每一帧都在调用
         public void RaycastAll(PointerEventData eventData, List<RaycastResult> raycastResults)
         {
             raycastResults.Clear();
@@ -374,7 +387,7 @@ namespace UnityEngine.EventSystems
             }
 
             if (!changedModule && m_CurrentInputModule != null)
-                m_CurrentInputModule.Process();
+                m_CurrentInputModule.Process(); //! 每一帧都执行
         }
 
         private void ChangeEventModule(BaseInputModule module)

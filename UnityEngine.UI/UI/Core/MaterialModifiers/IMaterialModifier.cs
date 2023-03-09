@@ -13,6 +13,8 @@ namespace UnityEngine.UI
         /// </summary>
         /// <param name="baseMaterial">The material that is to be modified</param>
         /// <returns>The modified material.</returns>
+        //! UnityEngine.CanvasRenderer.SetMaterial 调用传参的时候会被调用
+        //! 最终生效处: UnityEngine.UI.Graphic.UpdateMaterial
         Material GetModifiedMaterial(Material baseMaterial);
     }
 }

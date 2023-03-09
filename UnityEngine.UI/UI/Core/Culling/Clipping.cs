@@ -14,6 +14,7 @@ namespace UnityEngine.UI
         /// <param name="rectMaskParents">RectMasks to build the overlap rect from.</param>
         /// <param name="validRect">Was there a valid Rect found.</param>
         /// <returns>The final compounded overlapping rect</returns>
+        //! 被 UnityEngine.UI.RectMask2D.PerformClipping 调用
         public static Rect FindCullAndClipWorldRect(List<RectMask2D> rectMaskParents, out bool validRect)
         {
             if (rectMaskParents.Count == 0)

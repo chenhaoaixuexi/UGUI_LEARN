@@ -154,7 +154,8 @@ namespace UnityEngine.EventSystems
             get { return s_PointerUpHandler; }
         }
 
-        public static EventFunction<IPointerClickHandler> pointerClickHandler
+        //! 主要看 ProcessTouchPress 逻辑
+        public static EventFunction<IPointerClickHandler> pointerClickHandler //! 在 release 时触发 click 事件
         {
             get { return s_PointerClickHandler; }
         }
@@ -189,16 +190,18 @@ namespace UnityEngine.EventSystems
             get { return s_ScrollHandler; }
         }
 
-        public static EventFunction<IUpdateSelectedHandler> updateSelectedHandler
+        public static EventFunction<IUpdateSelectedHandler> updateSelectedHandler//! 好像需要手动调用UnityEngine.EventSystems.EventSystem.SetSelectedGameObject 不然没有效果
         {
             get { return s_UpdateSelectedHandler; }
         }
 
+        //! 就一个调用 UnityEngine.EventSystems.EventSystem.SetSelectedGameObject
         public static EventFunction<ISelectHandler> selectHandler
         {
             get { return s_SelectHandler; }
         }
 
+        //! 就一个调用 UnityEngine.EventSystems.EventSystem.SetSelectedGameObject
         public static EventFunction<IDeselectHandler> deselectHandler
         {
             get { return s_DeselectHandler; }
@@ -219,6 +222,7 @@ namespace UnityEngine.EventSystems
             get { return s_CancelHandler; }
         }
 
+        //! 在Hierarchy 树上递归向上 add transform 到跟
         private static void GetEventChain(GameObject root, IList<Transform> eventChain)
         {
             eventChain.Clear();
@@ -238,7 +242,8 @@ namespace UnityEngine.EventSystems
         public static bool Execute<T>(GameObject target, BaseEventData eventData, EventFunction<T> functor) where T : IEventSystemHandler
         {
             var internalHandlers = s_HandlerListPool.Get();
-            GetEventList<T>(target, internalHandlers);
+            //! 找 T 类型的 IEventSystemHandler
+            GetEventList<T>(target, internalHandlers); //! IList<IEventSystemHandler> internalHandlers
             //  if (s_InternalHandlers.Count > 0)
             //      Debug.Log("Executinng " + typeof (T) + " on " + target);
 
@@ -276,13 +281,17 @@ namespace UnityEngine.EventSystems
         /// </summary>
         private static readonly List<Transform> s_InternalTransformList = new List<Transform>(30);
 
-        public static GameObject ExecuteHierarchy<T>(GameObject root, BaseEventData eventData, EventFunction<T> callbackFunction) where T : IEventSystemHandler
+        //! 返回值可空
+        //! 处理 pointdown  point exixt 和 drag
+        public static GameObject ExecuteHierarchy<T>(GameObject root, BaseEventData eventData,
+            EventFunction<T> callbackFunction) where T : IEventSystemHandler
         {
             GetEventChain(root, s_InternalTransformList);
 
             for (var i = 0; i < s_InternalTransformList.Count; i++)
             {
                 var transform = s_InternalTransformList[i];
+                //! 有一个执行了对应的 function(T) 直接返回
                 if (Execute(transform.gameObject, eventData, callbackFunction))
                     return transform.gameObject;
             }

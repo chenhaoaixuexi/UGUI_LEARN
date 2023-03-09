@@ -20,10 +20,15 @@ namespace UnityEngine.UI
         IPointerEnterHandler, IPointerExitHandler,
         ISelectHandler, IDeselectHandler
     {
+        //! 在 UnityEngine.UI.Selectable.OnEnable 处扩容和 idx 赋值
+        //! 这是为IMoveHandler服务。当接收到方向键移动事件时，在导航（Navigation）失败后根据输入方向和当前Selectable组件的坐标会遍历List寻找，最终找到满足条件的新目标Selectable组件。
+        //! 主要在 UnityEngine.UI.Selectable.FindSelectable 里使用
         private static Selectable[] s_Selectables = new Selectable[10];
         private static int s_SelectableCount = 0;
 
         // If any selectable in s_Selectables are to be removed
+        //! 赋值为 true 的地方为 UnityEngine.UI.Selectable.OnDisable
+        //! 和 实例成员 m_WillRemove 有关, 也在 UnityEngine.UI.Selectable.OnDisable 方法里
         private static bool s_IsDirty = false;
 
         /// <summary>
@@ -55,6 +60,7 @@ namespace UnityEngine.UI
                 if (s_IsDirty)
                     RemoveInvalidSelectables();
 
+                //! 返回的数据是 copy 出来的, 频繁调用可能 造成高频 GC
                 Selectable[] temp = new Selectable[s_SelectableCount];
                 Array.Copy(s_Selectables, temp, s_SelectableCount);
                 return temp;
@@ -133,7 +139,7 @@ namespace UnityEngine.UI
         /// <summary>
         ///Transition mode for a Selectable.
         /// </summary>
-        public enum Transition
+        public enum Transition //! 视觉过度模式
         {
             /// <summary>
             /// No Transition.
@@ -143,7 +149,7 @@ namespace UnityEngine.UI
             /// <summary>
             /// Use an color tint transition.
             /// </summary>
-            ColorTint,
+            ColorTint, //默认
 
             /// <summary>
             /// Use a sprite swap transition.
@@ -299,7 +305,7 @@ namespace UnityEngine.UI
         public AnimationTriggers animationTriggers { get { return m_AnimationTriggers; } set { if (SetPropertyUtility.SetClass(ref m_AnimationTriggers, value)) OnSetProperty(); } }
 
         /// <summary>
-        /// Graphic that will be transitioned upon.
+        /// Graphic that will be transitioned(过度) upon.
         /// </summary>
         /// <example>
         /// <code>
@@ -486,7 +492,7 @@ namespace UnityEngine.UI
         }
 
         // Select on enable and add to the list.
-        protected override void OnEnable()
+        protected override void OnEnable() //! 子类都调用了 base.OnEnable
         {
             base.OnEnable();
 
@@ -495,12 +501,14 @@ namespace UnityEngine.UI
 
             m_WillRemove = false;
 
+            //! 自动扩容 两倍大
             if (s_SelectableCount == s_Selectables.Length)
             {
                 Selectable[] temp = new Selectable[s_Selectables.Length * 2];
                 Array.Copy(s_Selectables, temp, s_Selectables.Length);
                 s_Selectables = temp;
             }
+            //! 赛一个当前元素
             s_Selectables[s_SelectableCount++] = this;
             isPointerDown = false;
             DoStateTransition(currentSelectionState, true);
@@ -536,6 +544,7 @@ namespace UnityEngine.UI
 
         private static void RemoveInvalidSelectables()
         {
+            //! 判断 m_WillRemove 自动删除
             for (int i = s_SelectableCount - 1; i >= 0; --i)
             {
                 // Swap last element in array with element to be removed
@@ -680,7 +689,7 @@ namespace UnityEngine.UI
         /// <summary>
         /// An enumeration of selected states of objects
         /// </summary>
-        protected enum SelectionState
+        protected enum SelectionState //! 和 UnityEngine.UI.Selectable.currentSelectionState 有关
         {
             /// <summary>
             /// The UI object can be selected.
@@ -707,6 +716,13 @@ namespace UnityEngine.UI
             /// </summary>
             Disabled,
         }
+
+        /*
+         *
+         * OnMove 是 Selectable 类的一个虚方法，它用于处理移动事件，
+         * 即用户通过键盘或手柄在不同的 Selectable 之间切换焦点OnMove 是 Selectable 类的一个虚方法，它用于处理移动事件，即用户通过键盘或手柄在不同的 Selectable 之间切换焦点
+         */
+        #region OnMove 相关
 
         // Selection logic
 
@@ -972,7 +988,7 @@ namespace UnityEngine.UI
         }
 
         /// <summary>
-        /// Determine in which of the 4 move directions the next selectable object should be found.
+        /// !Determine in which of the 4 move directions the next selectable object should be found.
         /// </summary>
         /// <example>
         /// <code>
@@ -1017,6 +1033,8 @@ namespace UnityEngine.UI
                     break;
             }
         }
+
+        #endregion
 
         void StartColorTween(Color targetColor, bool instant)
         {
@@ -1247,7 +1265,7 @@ namespace UnityEngine.UI
         /// }
         /// </code>
         /// </example>
-        public virtual void OnSelect(BaseEventData eventData)
+        public virtual void OnSelect(BaseEventData eventData) //! 一般来说是被 EventSystem 调用
         {
             hasSelection = true;
             EvaluateAndTransitionToSelectionState();
@@ -1272,7 +1290,7 @@ namespace UnityEngine.UI
         /// }
         /// </code>
         /// </example>
-        public virtual void OnDeselect(BaseEventData eventData)
+        public virtual void OnDeselect(BaseEventData eventData) //! 一般来说是被 EventSystem 调用
         {
             hasSelection = false;
             EvaluateAndTransitionToSelectionState();

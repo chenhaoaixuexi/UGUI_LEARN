@@ -513,7 +513,8 @@ namespace UnityEngine.UI
         /// </example>
         public bool isFocused
         {
-            get { return m_AllowInput; }
+            //! 在 UnityEngine.UI.InputField.DeactivateInputField 赋值为 false
+            get { return m_AllowInput; } //! 只在 UnityEngine.UI.InputField.ActivateInputFieldInternal 时赋值为 true
         }
 
         /// <summary>
@@ -1068,7 +1069,9 @@ namespace UnityEngine.UI
             base.OnDisable();
         }
 
-        IEnumerator CaretBlink()
+        #region 光标逻辑
+
+        IEnumerator CaretBlink() //! 光标逻辑
         {
             // Always ensure caret is initially visible since it can otherwise be confusing for a moment.
             m_CaretVisible = true;
@@ -1127,6 +1130,8 @@ namespace UnityEngine.UI
             if (m_TextComponent != null && m_CachedInputRenderer != null)
                 m_CachedInputRenderer.SetMaterial(m_TextComponent.GetModifiedMaterial(Graphic.defaultGraphicMaterial), Texture2D.whiteTexture);
         }
+
+        #endregion
 
         /// <summary>
         /// Focus the input field initializing properties.
@@ -2233,7 +2238,7 @@ namespace UnityEngine.UI
                 // This callback also occurs when assigning text to our Text component, i.e.,
                 // m_TextComponent.text = processed;
 
-                m_PreventFontCallback = true;
+                m_PreventFontCallback = true; //! 检查m_PreventFontCallback标志，以确保不会出现无限递归的情况。
 
                 string fullText;
                 if (compositionString.Length > 0)

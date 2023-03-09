@@ -64,6 +64,7 @@ namespace UnityEngine.UI
         /// Normal use of the layout system should not use this method. Instead MarkLayoutForRebuild should be used instead, which triggers a delayed layout rebuild during the next layout pass. The delayed rebuild automatically handles objects in the entire layout hierarchy in the correct order, and prevents multiple recalculations for the same layout elements.
         /// However, for special layout calculation needs, ::ref::ForceRebuildLayoutImmediate can be used to get the layout of a sub-tree resolved immediately. This can even be done from inside layout calculation methods such as ILayoutController.SetLayoutHorizontal orILayoutController.SetLayoutVertical. Usage should be restricted to cases where multiple layout passes are unavaoidable despite the extra cost in performance.
         /// </remarks>
+        //! 只有 UnityEngine.UI.ScrollRect.SetLayoutHorizontal 调用
         public static void ForceRebuildLayoutImmediate(RectTransform layoutRoot)
         {
             var rebuilder = s_Rebuilders.Get();
@@ -72,10 +73,12 @@ namespace UnityEngine.UI
             s_Rebuilders.Release(rebuilder);
         }
 
+        //! 先calcu 在set, 搞完 水平的 搞垂直
         public void Rebuild(CanvasUpdate executing)
         {
             switch (executing)
             {
+                //!  ILayoutGroup 被 PerformLayoutCalculation 管
                 case CanvasUpdate.Layout:
                     // It's unfortunate that we'll perform the same GetComponents querys for the tree 2 times,
                     // but each tree have to be fully iterated before going to the next action,
@@ -103,6 +106,7 @@ namespace UnityEngine.UI
             // since they will be their own roots.
             if (components.Count > 0)
             {
+                // 布局控制需要自上而下地执行，父母在孩子之前完成，因为孩子依赖于父母的size。
                 // Layout control needs to executed top down with parents being done before their children,
                 // because the children rely on the sizes of the parents.
 
@@ -117,6 +121,7 @@ namespace UnityEngine.UI
                         action(components[i]);
 
                 for (int i = 0; i < rect.childCount; i++)
+                    //! 递归 PerformLayoutControl
                     PerformLayoutControl(rect.GetChild(i) as RectTransform, action);
             }
 
@@ -135,12 +140,14 @@ namespace UnityEngine.UI
             // If there are no controllers on this rect we can skip this entire sub-tree
             // We don't need to consider controllers on children deeper in the sub-tree either,
             // since they will be their own roots.
+            //!  自底向上的计算
             if (components.Count > 0  || rect.GetComponent(typeof(ILayoutGroup)))
             {
                 // Layout calculations needs to executed bottom up with children being done before their parents,
                 // because the parent calculated sizes rely on the sizes of the children.
 
                 for (int i = 0; i < rect.childCount; i++)
+                    //! 递归调用 PerformLayoutCalculation
                     PerformLayoutCalculation(rect.GetChild(i) as RectTransform, action);
 
                 for (int i = 0; i < components.Count; i++)
@@ -154,6 +161,7 @@ namespace UnityEngine.UI
         /// Mark the given RectTransform as needing it's layout to be recalculated during the next layout pass.
         /// </summary>
         /// <param name="rect">Rect to rebuild.</param>
+        //! 最终托管到 UnityEngine.UI.CanvasUpdateRegistry.PerformUpdate的方法, 然后进一步回调 UnityEngine.UI.LayoutRebuilder.Rebuild
         public static void MarkLayoutForRebuild(RectTransform rect)
         {
             if (rect == null || rect.gameObject == null)
@@ -161,7 +169,9 @@ namespace UnityEngine.UI
 
             var comps = ListPool<Component>.Get();
             bool validLayoutGroup = true;
-            RectTransform layoutRoot = rect;
+            RectTransform layoutRoot = rect/*入参*/;
+            //!  从下往上爬树, 找到一个 ILayoutGroup , 赋值为 layoutRoot
+            //!  直到找不到 ILayoutGroup的 节点, 退出循环
             var parent = layoutRoot.parent as RectTransform;
             while (validLayoutGroup && !(parent == null || parent.gameObject == null))
             {
@@ -194,12 +204,13 @@ namespace UnityEngine.UI
             ListPool<Component>.Release(comps);
         }
 
+        //! 在 layoutRoot 上查是否有可用的 ILayoutController
         private static bool ValidController(RectTransform layoutRoot, List<Component> comps)
         {
             if (layoutRoot == null || layoutRoot.gameObject == null)
                 return false;
 
-            layoutRoot.GetComponents(typeof(ILayoutController), comps);
+            layoutRoot.GetComponents(typeof(ILayoutController/*其一个子类是ILayoutGroup*/), comps);
             for (int i = 0; i < comps.Count; ++i)
             {
                 var cur = comps[i];
@@ -212,17 +223,20 @@ namespace UnityEngine.UI
             return false;
         }
 
+        //! invoke by MarkLayoutForRebuild
         private static void MarkLayoutRootForRebuild(RectTransform controller)
         {
             if (controller == null)
                 return;
 
+            //! 这里创建 OR获取一个 LayoutRebuilder
             var rebuilder = s_Rebuilders.Get();
             rebuilder.Initialize(controller);
             if (!CanvasUpdateRegistry.TryRegisterCanvasElementForLayoutRebuild(rebuilder))
                 s_Rebuilders.Release(rebuilder);
         }
 
+        //! impl UnityEngine.UI.ICanvasElement.LayoutComplete
         public void LayoutComplete()
         {
             s_Rebuilders.Release(this);

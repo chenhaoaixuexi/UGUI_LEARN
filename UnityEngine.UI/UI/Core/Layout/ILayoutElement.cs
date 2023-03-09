@@ -90,7 +90,8 @@ namespace UnityEngine.UI
         float preferredHeight { get; }
 
         /// <summary>
-        /// The extra relative height this layout element should be allocated if there is additional available space.
+        /// The extra relative height this layout element should be allocated
+        /// if there is additional available space.
         /// </summary>
         ///<example>
         ///<code>
@@ -125,7 +126,7 @@ namespace UnityEngine.UI
         /// <remarks>
         /// If multiple components on the same GameObject implement the ILayoutElement interface, the values provided by components that return a higher priority value are given priority. However, values less than zero are ignored. This way a component can override only select properties by leaving the remaning values to be -1 or other values less than zero.
         /// </remarks>
-        int layoutPriority { get; }
+        int layoutPriority { get; } //! 唯一调用处: UnityEngine.UI.LayoutUtility.GetLayoutProperty
     }
 
     /// <summary>

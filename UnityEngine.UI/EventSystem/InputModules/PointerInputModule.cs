@@ -29,6 +29,8 @@ namespace UnityEngine.EventSystems
         /// </summary>
         public const int kFakeTouchesId = -4;
 
+        //! 只哟 GetOrAdd 和 Remove、clear
+        //!protected bool GetPointerData(int id, out PointerEventData data, bool create)
         protected Dictionary<int, PointerEventData> m_PointerData = new Dictionary<int, PointerEventData>();
 
         /// <summary>
@@ -36,9 +38,11 @@ namespace UnityEngine.EventSystems
         /// </summary>
         /// <param name="id">Touch ID</param>
         /// <param name="data">Found data</param>
-        /// <param name="create">If not found should it be created</param>
+        /// <param name="create">!If not found should it be created</param>
         /// <returns>True if pointer is found.</returns>
-        protected bool GetPointerData(int id, out PointerEventData data, bool create)
+        //! 在 UnityEngine.EventSystems.PointerInputModule.GetMousePointerEventData 和
+        //! UnityEngine.EventSystems.PointerInputModule.GetTouchPointerEventData 里  create==true 的调用
+        protected bool GetPointerData(/*Touch ID*/int id, out PointerEventData data, bool create)
         {
             if (!m_PointerData.TryGetValue(id, out data) && create)
             {
@@ -55,7 +59,7 @@ namespace UnityEngine.EventSystems
         /// <summary>
         /// Remove the PointerEventData from the cache.
         /// </summary>
-        protected void RemovePointerData(PointerEventData data)
+        protected void RemovePointerData(PointerEventData data) //! releas 了 会删除
         {
             m_PointerData.Remove(data.pointerId);
         }
@@ -67,6 +71,7 @@ namespace UnityEngine.EventSystems
         /// <param name="pressed">Are we pressed this frame</param>
         /// <param name="released">Are we released this frame</param>
         /// <returns></returns>
+        //! released = (input.phase == TouchPhase.Canceled) || (input.phase == TouchPhase.Ended);
         protected PointerEventData GetTouchPointerEventData(Touch input, out bool pressed, out bool released)
         {
             PointerEventData pointerData;
@@ -74,7 +79,7 @@ namespace UnityEngine.EventSystems
 
             pointerData.Reset();
 
-            pressed = created || (input.phase == TouchPhase.Began);
+            pressed = created || (input.phase == TouchPhase.Began); //! 第一次点击的时候
             released = (input.phase == TouchPhase.Canceled) || (input.phase == TouchPhase.Ended);
 
             if (created)
@@ -95,12 +100,14 @@ namespace UnityEngine.EventSystems
             }
             else
             {
+                //! 发出射线, 然后 取第一个
                 eventSystem.RaycastAll(pointerData, m_RaycastResultCache);
 
-                var raycast = FindFirstRaycast(m_RaycastResultCache);
+                var raycast = FindFirstRaycast/*!取第一个*/(m_RaycastResultCache);
                 pointerData.pointerCurrentRaycast = raycast;
                 m_RaycastResultCache.Clear();
             }
+            //! 返回出去给 IDrag、IpointClick等接口的实现类用
             return pointerData;
         }
 
@@ -249,6 +256,15 @@ namespace UnityEngine.EventSystems
         /// <summary>
         /// Return the current MouseState.
         /// </summary>
+        /*
+         PointerInputModule  (1 usage found)
+		    GetMousePointerEventData()  (1 usage found)
+        StandaloneInputModule  (1 usage found)
+	        ProcessMouseEvent(int)  (1 usage found)
+        TouchInputModule  (1 usage found)
+	        FakeTouches()  (1 usage found)
+
+         */
         protected virtual MouseState GetMousePointerEventData(int id)
         {
             // Populate the left button...
@@ -387,7 +403,7 @@ namespace UnityEngine.EventSystems
         {
             var sb = new StringBuilder("<b>Pointer Input Module of type: </b>" + GetType());
             sb.AppendLine();
-            foreach (var pointer in m_PointerData)
+            foreach (var pointer in m_PointerData/*当前点击事件*/)
             {
                 if (pointer.Value == null)
                     continue;

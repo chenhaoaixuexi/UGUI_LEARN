@@ -73,7 +73,8 @@ namespace UnityEngine.UI
         /// </returns>
         public static float GetPreferredWidth(RectTransform rect)
         {
-            return Mathf.Max(GetLayoutProperty(rect, e => e.minWidth, 0), GetLayoutProperty(rect, e => e.preferredWidth, 0));
+            return Mathf.Max(GetLayoutProperty(rect, e => e.minWidth, 0),
+                GetLayoutProperty(rect, e => e.preferredWidth, 0));
         }
 
         /// <summary>
@@ -165,7 +166,7 @@ namespace UnityEngine.UI
                 // If this layout components has lower priority than a previously used, ignore it.
                 if (priority < maxPriority)
                     continue;
-                float prop = property(layoutComp);
+                float prop = property(layoutComp);//! 一个 function
                 // If this layout property is set to a negative value, it means it should be ignored.
                 if (prop < 0)
                     continue;

@@ -396,4 +396,9 @@
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="..\UnityEngine.UI\UI\Core\Utility\ReadMe.txt">
+      <Link>UI\Core\Utility\ReadMe.txt</Link>
+    </Content>
+  </ItemGroup>
 </Project>

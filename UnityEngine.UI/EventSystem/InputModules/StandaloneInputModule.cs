@@ -183,7 +183,8 @@ namespace UnityEngine.EventSystems
             m_MousePosition = input.mousePosition;
         }
 
-        private void ReleaseMouse(PointerEventData pointerEvent, GameObject currentOverGo)
+        //! 调用 时机 UpdateModule、UnityEngine.EventSystems.StandaloneInputModule.ProcessMousePress
+        private void ReleaseMouse(PointerEventData pointerEvent, GameObject currentOverGo) //! 移动设备运行时不会调用这个方法, 所以不看
         {
             ExecuteEvents.Execute(pointerEvent.pointerPress, pointerEvent, ExecuteEvents.pointerUpHandler);
 
@@ -274,12 +275,14 @@ namespace UnityEngine.EventSystems
             ClearSelection();
         }
 
-        public override void Process()
+        public override void Process() //! 在 UnityEngine.EventSystems.EventSystem.Update 里调用
         {
-            if (!eventSystem.isFocused && ShouldIgnoreEventsOnNoFocus())
+            //! 切后台了 直接返回
+            if (!eventSystem.isFocused && /*对于不同平台额兼容*/ ShouldIgnoreEventsOnNoFocus())
                 return;
 
-            bool usedEvent = SendUpdateEventToSelectedObject();
+            //! 如果updateSelectedHandler 里 对参数 data 进行 use了, 那么后面的 move 和 submit 就不会再执行了
+            bool usedEvent = SendUpdateEventToSelectedObject();//! invoke ExecuteEvents.updateSelectedHandler
 
             // case 1004066 - touch / mouse events should be processed before navigation events in case
             // they change the current selected gameobject and the submit button is a touch / mouse button.
@@ -288,7 +291,7 @@ namespace UnityEngine.EventSystems
             if (!ProcessTouchEvents() && input.mousePresent)
                 ProcessMouseEvent();
 
-            if (eventSystem.sendNavigationEvents)
+            if (eventSystem.sendNavigationEvents) //! 默认走
             {
                 if (!usedEvent)
                     usedEvent |= SendMoveEventToSelectedObject();
@@ -298,9 +301,11 @@ namespace UnityEngine.EventSystems
             }
         }
 
-        private bool ProcessTouchEvents()
+        //! 委托 ProcessDrag、ProcessMove、ProcessTouchPress 来处理 进一步的事件
+        //! 逐帧运行
+        private bool ProcessTouchEvents() //! 在UnityEngine.EventSystems.StandaloneInputModule.Process 中调用
         {
-            for (int i = 0; i < input.touchCount; ++i)
+            for (int i = 0; i < input.touchCount; ++i)//! 在 simulator 里, input.touchCount 可以不为 0
             {
                 Touch touch = input.GetTouch(i);
 
@@ -309,7 +314,7 @@ namespace UnityEngine.EventSystems
 
                 bool released;
                 bool pressed;
-                var pointer = GetTouchPointerEventData(touch, out pressed, out released);
+                var pointer = GetTouchPointerEventData(touch/*Touch ID*/, out pressed, out released);
 
                 ProcessTouchPress(pointer, pressed, released);
 
@@ -325,7 +330,8 @@ namespace UnityEngine.EventSystems
         }
 
         /// <summary>
-        /// This method is called by Unity whenever a touch event is processed. Override this method with a custom implementation to process touch events yourself.
+        /// This method is called by Unity whenever a touch event is processed.
+        /// Override this method with a custom implementation to process touch events yourself.
         /// </summary>
         /// <param name="pointerEvent">Event data relating to the touch event, such as position and ID to be passed to the touch event destination object.</param>
         /// <param name="pressed">This is true for the first frame of a touch event, and false thereafter. This can therefore be used to determine the instant a touch event occurred.</param>
@@ -335,6 +341,7 @@ namespace UnityEngine.EventSystems
         /// </remarks>
         protected void ProcessTouchPress(PointerEventData pointerEvent, bool pressed, bool released)
         {
+            //! 根据pointerEvent.pointerCurrentRaycast获取当前触摸的游戏对象
             var currentOverGo = pointerEvent.pointerCurrentRaycast.gameObject;
 
             // PointerDown notification
@@ -346,9 +353,10 @@ namespace UnityEngine.EventSystems
                 pointerEvent.useDragThreshold = true;
                 pointerEvent.pressPosition = pointerEvent.position;
                 pointerEvent.pointerPressRaycast = pointerEvent.pointerCurrentRaycast;
+                //! 如果当前触摸对象与当前选中对象不同，则取消选中
+                DeselectIfSelectionChanged(currentOverGo, pointerEvent); //! 被点击的对象不是当前选中的对象, 则取消当前选中的对象(UNSelectionHandel)
 
-                DeselectIfSelectionChanged(currentOverGo, pointerEvent);
-
+                //! 如果当前触摸对象与 pointerEvent.pointerEnter 不同，发送 PointerEnter 事件
                 if (pointerEvent.pointerEnter != currentOverGo)
                 {
                     // send a pointer enter to the touched element if it isn't the one to select...
@@ -359,6 +367,8 @@ namespace UnityEngine.EventSystems
                 // search for the control that will receive the press
                 // if we can't find a press handler set the press
                 // handler to be what would receive a click.
+                //! 查找并执行 PointerDown 和 PointerClick 事件处理器
+                //! 从下往上, 找第一个 IPointerDownHandler
                 var newPressed = ExecuteEvents.ExecuteHierarchy(currentOverGo, pointerEvent, ExecuteEvents.pointerDownHandler);
 
                 // didnt find a press handler... search for a click handler
@@ -368,11 +378,11 @@ namespace UnityEngine.EventSystems
                 // Debug.Log("Pressed: " + newPressed);
 
                 float time = Time.unscaledTime;
-
+                //! 更新点击计数和点击时间
                 if (newPressed == pointerEvent.lastPress)
                 {
                     var diffTime = time - pointerEvent.clickTime;
-                    if (diffTime < 0.3f)
+                    if (diffTime < 0.3f) //! 超过 0.3s 重置点击计数
                         ++pointerEvent.clickCount;
                     else
                         pointerEvent.clickCount = 1;
@@ -383,13 +393,14 @@ namespace UnityEngine.EventSystems
                 {
                     pointerEvent.clickCount = 1;
                 }
-
+                //! 保存 PointerPress、RawPointerPress 和 PointerClick 事件处理对象
                 pointerEvent.pointerPress = newPressed;
                 pointerEvent.rawPointerPress = currentOverGo;
 
                 pointerEvent.clickTime = time;
 
                 // Save the drag handler as well
+                //! 查找并保存 PointerDrag 事件处理器，如果找到，执行 InitializePotentialDrag 事件
                 pointerEvent.pointerDrag = ExecuteEvents.GetEventHandler<IDragHandler>(currentOverGo);
 
                 if (pointerEvent.pointerDrag != null)
@@ -398,10 +409,12 @@ namespace UnityEngine.EventSystems
                 m_InputPointerEvent = pointerEvent;
             }
 
+            //! 处理触摸抬起事件
             // PointerUp notification
             if (released)
             {
                 // Debug.Log("Executing pressup on: " + pointer.pointerPress);
+                //! 执行 PointerUp 事件处理器
                 ExecuteEvents.Execute(pointerEvent.pointerPress, pointerEvent, ExecuteEvents.pointerUpHandler);
 
                 // Debug.Log("KeyCode: " + pointer.eventData.keyCode);
@@ -409,7 +422,7 @@ namespace UnityEngine.EventSystems
                 // see if we mouse up on the same element that we clicked on...
                 var pointerUpHandler = ExecuteEvents.GetEventHandler<IPointerClickHandler>(currentOverGo);
 
-                // PointerClick and Drop events
+                //! PointerClick and Drop events
                 if (pointerEvent.pointerPress == pointerUpHandler && pointerEvent.eligibleForClick)
                 {
                     ExecuteEvents.Execute(pointerEvent.pointerPress, pointerEvent, ExecuteEvents.pointerClickHandler);
@@ -447,7 +460,7 @@ namespace UnityEngine.EventSystems
                 return false;
 
             var data = GetBaseEventData();
-            if (input.GetButtonDown(m_SubmitButton))
+            if (input.GetButtonDown(m_SubmitButton)) //! 监听 "Submit" 按钮的点击
                 ExecuteEvents.Execute(eventSystem.currentSelectedGameObject, data, ExecuteEvents.submitHandler);
 
             if (input.GetButtonDown(m_CancelButton))
@@ -543,6 +556,7 @@ namespace UnityEngine.EventSystems
         /// </summary>
         protected void ProcessMouseEvent(int id)
         {
+            //! 里面触发 eventSystem.RaycastAll(leftData, m_RaycastResultCache);
             var mouseData = GetMousePointerEventData(id);
             var leftButtonData = mouseData.GetButtonState(PointerEventData.InputButton.Left).eventData;
 
@@ -566,12 +580,14 @@ namespace UnityEngine.EventSystems
             }
         }
 
+        //! return: Is the event used?
         protected bool SendUpdateEventToSelectedObject()
         {
             if (eventSystem.currentSelectedGameObject == null)
                 return false;
 
             var data = GetBaseEventData();
+            //! 草了, 每一帧都在执行这个方法
             ExecuteEvents.Execute(eventSystem.currentSelectedGameObject, data, ExecuteEvents.updateSelectedHandler);
             return data.used;
         }

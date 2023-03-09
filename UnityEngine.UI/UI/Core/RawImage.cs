@@ -96,6 +96,7 @@ namespace UnityEngine.UI
         /// <summary>
         /// UV rectangle used by the texture.
         /// </summary>
+        //! 会被 SetNativeSize 调用
         public Rect uvRect
         {
             get
@@ -129,6 +130,7 @@ namespace UnityEngine.UI
             }
         }
 
+        //! 和父类的 Grahpic相比, 多了 因tex导致的的缩放处理
         protected override void OnPopulateMesh(VertexHelper vh)
         {
             Texture tex = mainTexture;
@@ -146,6 +148,7 @@ namespace UnityEngine.UI
                     vh.AddVert(new Vector3(v.z, v.w), color32, new Vector2(m_UVRect.xMax * scaleX, m_UVRect.yMax * scaleY));
                     vh.AddVert(new Vector3(v.z, v.y), color32, new Vector2(m_UVRect.xMax * scaleX, m_UVRect.yMin * scaleY));
 
+                    //! 简单的画个矩形
                     vh.AddTriangle(0, 1, 2);
                     vh.AddTriangle(2, 3, 0);
                 }

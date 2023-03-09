@@ -5,6 +5,7 @@ namespace UnityEngine.UI
         readonly Vector3[] m_WorldCorners = new Vector3[4];
         readonly Vector3[] m_CanvasCorners = new Vector3[4];
 
+        //! 被UnityEngine.UI.RectMask2D.canvasRect
         public Rect GetCanvasRect(RectTransform t, Canvas c)
         {
             if (c == null)

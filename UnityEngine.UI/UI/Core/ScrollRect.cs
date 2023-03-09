@@ -98,6 +98,8 @@ namespace UnityEngine.UI
         /// </summary>
         public class ScrollRectEvent : UnityEvent<Vector2> {}
 
+        //! UnityEngine.UI.ScrollRect.SetContentAnchoredPosition
+        //! 就这一个地方写 anchor pos
         [SerializeField]
         private RectTransform m_Content;
 
@@ -552,6 +554,7 @@ namespace UnityEngine.UI
             if (m_VerticalScrollbar)
                 m_VerticalScrollbar.onValueChanged.AddListener(SetVerticalNormalizedPosition);
 
+            //!  另一处地方: UnityEngine.UI.ScrollRect.SetDirtyCaching
             CanvasUpdateRegistry.RegisterCanvasElementForLayoutRebuild(this);
             SetDirty();
         }
@@ -617,6 +620,7 @@ namespace UnityEngine.UI
             m_Velocity = Vector2.zero;
         }
 
+        //! 使用data.scrollDelta 来修改 anchor_position
         public virtual void OnScroll(PointerEventData data)
         {
             if (!IsActive())
@@ -742,9 +746,10 @@ namespace UnityEngine.UI
         /// }
         /// </code>
         /// </example>
+        //!根据m_PointerStartLocalCursor和m_ContentStartPosition计算出m_Content新的anchoredPosition。
         public virtual void OnDrag(PointerEventData eventData)
         {
-            if (!m_Dragging)
+            if (!m_Dragging) //! 在OnEndDrag赋值为false
                 return;
 
             if (eventData.button != PointerEventData.InputButton.Left)
@@ -779,6 +784,8 @@ namespace UnityEngine.UI
         /// <summary>
         /// Sets the anchored position of the content.
         /// </summary>
+        //! 就这一个地方写 anchor pos
+        //! onScroll、oDrag 、lateUpdate 调用
         protected virtual void SetContentAnchoredPosition(Vector2 position)
         {
             if (!m_Horizontal)
@@ -793,6 +800,7 @@ namespace UnityEngine.UI
             }
         }
 
+        //! 对于不同的 MovementType 做丝滑处理
         protected virtual void LateUpdate()
         {
             if (!m_Content)
@@ -1117,7 +1125,7 @@ namespace UnityEngine.UI
                     DrivenTransformProperties.SizeDelta |
                     DrivenTransformProperties.AnchoredPosition);
 
-                // Make view full size to see if content fits.
+                // M!ake view full size to see if content fits.
                 viewRect.anchorMin = Vector2.zero;
                 viewRect.anchorMax = Vector2.one;
                 viewRect.sizeDelta = Vector2.zero;

@@ -207,13 +207,13 @@ namespace UnityEngine.UI
                     if (String.IsNullOrEmpty(m_Text))
                         return;
                     m_Text = "";
-                    SetVerticesDirty();
+                    SetVerticesDirty(); //! 非 active 直接返回
                 }
                 else if (m_Text != value)
                 {
                     m_Text = value;
-                    SetVerticesDirty();
-                    SetLayoutDirty();
+                    SetVerticesDirty(); //! 非 active 直接返回
+                    SetLayoutDirty(); //! 非 active 直接返回
                 }
             }
         }
@@ -536,7 +536,7 @@ namespace UnityEngine.UI
         /// <remarks>
         /// For dynamic fonts, the value is equivalent to the scale factor of the canvas. For non-dynamic fonts, the value is calculated from the requested text size and the size from the font.
         /// </remarks>
-        public float pixelsPerUnit
+        public float pixelsPerUnit //! 一个scale值
         {
             get
             {
@@ -591,6 +591,13 @@ namespace UnityEngine.UI
         /// </summary>
         /// <param name="extents">The extents the text can draw in.</param>
         /// <returns>Generated settings.</returns>
+        //! 调用方有:
+        /*
+         OnPopulateMesh(VertexHelper)
+        UpdateLabel()
+        preferredHeight
+        preferredWidth
+         */
         public TextGenerationSettings GetGenerationSettings(Vector2 extents)
         {
             var settings = new TextGenerationSettings();
@@ -641,20 +648,25 @@ namespace UnityEngine.UI
             }
         }
 
+        //! 成员变量 避免不断分配内存
         readonly UIVertex[] m_TempVerts = new UIVertex[4];
+        //! 在UnityEngine.UI.Graphic.UpdateGeometry里面(间接)调用
+
+        /*
+         *
+         *! OnPopulateMesh方法通过TextGenerator对象生成文本的顶点、三角形索引和UV信息，然后将这些信息通过参数传递给VertexHelper对象进行绘制。
+         */
         protected override void OnPopulateMesh(VertexHelper toFill)
         {
             if (font == null)
                 return;
-
-            // We don't care if we the font Texture changes while we are doing our Update.
-            // The end result of cachedTextGenerator will be valid for this instance.
-            // Otherwise we can get issues like Case 619238.
+            //! 将 m_DisableFontTextureRebuiltCallback 设置为 true。这个属性用于防止在进行更新时字体纹理发生变化。
             m_DisableFontTextureRebuiltCallback = true;
 
             Vector2 extents = rectTransform.rect.size;
 
             var settings = GetGenerationSettings(extents);
+            //! 使用 UnityEngine.TextGenerator.PopulateWithErrors 生成文本的网格信息
             cachedTextGenerator.PopulateWithErrors(text, settings, gameObject);
 
             // Apply the offset to the vertices
@@ -669,6 +681,14 @@ namespace UnityEngine.UI
                 return;
             }
 
+            //!  roundingOffset 网格顶点的偏移量
+            /*
+             *在文本渲染过程中，会将文本转换为顶点，这些顶点的位置是以像素为单位的。然而，由于浮点数的精度有限，这些像素可能无法完全精确地对齐到UI组件的像素格子上。
+            * 为了解决这个问题，将顶点位置舍入到最接近的像素位置，以便文本在渲染时更加清晰。
+             * 为了实现这一点，代码将所有顶点的位置乘以单位像素，并计算出最接近该点的像素位置。
+             * 然后，代码计算偏移量，使得最接近该点的像素位置与原始位置保持一致。
+             * 最后，代码通过将偏移量添加到所有顶点的位置来调整它们的位置，以便它们能够被正确地舍入到最接近的像素位置上。
+             */
             Vector2 roundingOffset = new Vector2(verts[0].position.x, verts[0].position.y) * unitsPerPixel;
             roundingOffset = PixelAdjustPoint(roundingOffset) - roundingOffset;
             toFill.Clear();

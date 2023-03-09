@@ -37,7 +37,7 @@ namespace UnityEngine.EventSystems
         public int depth;
 
         /// <summary>
-        /// The SortingLayer of the hit object.
+        /// !The SortingLayer of the hit object.
         /// </summary>
         /// <remarks>
         /// For UI.Graphic elements this will be the values from that graphic's Canvas

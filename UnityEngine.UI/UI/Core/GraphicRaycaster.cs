@@ -7,10 +7,11 @@ using UnityEngine.Serialization;
 namespace UnityEngine.UI
 {
     [AddComponentMenu("Event/Graphic Raycaster")]
-    [RequireComponent(typeof(Canvas))]
+    [RequireComponent(typeof(Canvas))] //! 挂在在 Canvas上
     /// <summary>
     /// A derived BaseRaycaster to raycast against Graphic elements.
-    /// </summary>
+    /// </summary>=
+    //! 在编辑器上 UnityEditor.UI.MenuOptions.CreateNewUI(UnityEditor.UI.MenuOptions.AddCanvas) 时就加上Raycaster了
     public class GraphicRaycaster : BaseRaycaster
     {
         protected const int kNoEventMaskSet = -1;
@@ -115,17 +116,21 @@ namespace UnityEngine.UI
         /// </summary>
         /// <param name="eventData">Current event data</param>
         /// <param name="resultAppendList">List of hit objects to append new results to.</param>
-        public override void Raycast(PointerEventData eventData, List<RaycastResult> resultAppendList)
+        public override void Raycast(PointerEventData eventData, List<RaycastResult> resultAppendList/*值是 成员变量 m_RaycastResults 的子集*/)
         {
+            //!GraphicRaycaster 挂在 有 Canvas 的对象上
             if (canvas == null)
                 return;
 
+            //! 获取 当前画布上注册的所有 UnityEngine.UI.Graphic
             var canvasGraphics = GraphicRegistry.GetGraphicsForCanvas(canvas);
             if (canvasGraphics == null || canvasGraphics.Count == 0)
                 return;
 
             int displayIndex;
+            //! 发射线的 Camera
             var currentEventCamera = eventCamera; // Property can call Camera.main, so cache the reference
+            #region 处理多显示器情况
 
             if (canvas.renderMode == RenderMode.ScreenSpaceOverlay || currentEventCamera == null)
                 displayIndex = canvas.targetDisplay;
@@ -171,12 +176,14 @@ namespace UnityEngine.UI
             else
                 pos = currentEventCamera.ScreenToViewportPoint(eventPosition);
 
+            #endregion
             // If it's outside the camera's viewport, do nothing
             if (pos.x < 0f || pos.x > 1f || pos.y < 0f || pos.y > 1f)
                 return;
 
             float hitDistance = float.MaxValue;
 
+            //! currentEventCamera不为空, 那么 发射线
             Ray ray = new Ray();
 
             if (currentEventCamera != null)
@@ -194,6 +201,7 @@ namespace UnityEngine.UI
                         : Mathf.Abs((currentEventCamera.farClipPlane - currentEventCamera.nearClipPlane) / projectionDirection);
                 }
 
+                //! 基于 3D 还是2D的射线, 委托到 ReflectionMethodsCache.Singleton 的不同的方法上
                 if (blockingObjects == BlockingObjects.ThreeD || blockingObjects == BlockingObjects.All)
                 {
                     if (ReflectionMethodsCache.Singleton.raycast3D != null)
@@ -203,7 +211,6 @@ namespace UnityEngine.UI
                             hitDistance = hits[0].distance;
                     }
                 }
-
                 if (blockingObjects == BlockingObjects.TwoD || blockingObjects == BlockingObjects.All)
                 {
                     if (ReflectionMethodsCache.Singleton.raycast2D != null)
@@ -215,8 +222,10 @@ namespace UnityEngine.UI
                 }
             }
 
+            //! m_RaycastResults清空之前的可能的脏数据
             m_RaycastResults.Clear();
 
+            //! 装载成员变量 m_RaycastResults
             Raycast(canvas, currentEventCamera, eventPosition, canvasGraphics, m_RaycastResults);
 
             int totalCount = m_RaycastResults.Count;
@@ -225,7 +234,7 @@ namespace UnityEngine.UI
                 var go = m_RaycastResults[index].gameObject;
                 bool appendGraphic = true;
 
-                if (ignoreReversedGraphics)
+                if (ignoreReversedGraphics) //! 看射线和对应的物体是不是反向了, 是反向=> appendGraphic = true;
                 {
                     if (currentEventCamera == null)
                     {
@@ -248,6 +257,7 @@ namespace UnityEngine.UI
                     Transform trans = go.transform;
                     Vector3 transForward = trans.forward;
 
+                    //! 在很远的地方 ignore，在相机后面 ignore
                     if (currentEventCamera == null || canvas.renderMode == RenderMode.ScreenSpaceOverlay)
                         distance = 0;
                     else
@@ -263,6 +273,7 @@ namespace UnityEngine.UI
                     if (distance >= hitDistance)
                         continue;
 
+                    //! 加入对应的m_RaycastResults里的元素
                     var castResult = new RaycastResult
                     {
                         gameObject = go,
@@ -282,7 +293,7 @@ namespace UnityEngine.UI
         }
 
         /// <summary>
-        /// The camera that will generate rays for this raycaster.
+        /// !The camera that will generate rays for this raycaster.
         /// </summary>
         /// <returns>
         /// - Null if Camera mode is ScreenSpaceOverlay or ScreenSpaceCamera and has no camera.
@@ -304,7 +315,8 @@ namespace UnityEngine.UI
         /// Perform a raycast into the screen and collect all graphics underneath it.
         /// </summary>
         [NonSerialized] static readonly List<Graphic> s_SortedGraphics = new List<Graphic>();
-        private static void Raycast(Canvas canvas, Camera eventCamera, Vector2 pointerPosition, IList<Graphic> foundGraphics, List<Graphic> results)
+        private static void Raycast(Canvas canvas,/*!相机*/ Camera eventCamera, Vector2 pointerPosition,
+            IList</*!UnityEngine.UI.Graphic*/Graphic> foundGraphics, List<Graphic> results)
         {
             // Necessary for the event system
             int totalCount = foundGraphics.Count;
@@ -322,12 +334,14 @@ namespace UnityEngine.UI
                 if (eventCamera != null && eventCamera.WorldToScreenPoint(graphic.rectTransform.position).z > eventCamera.farClipPlane)
                     continue;
 
+                //! 委托到 UnityEngine.UI.Graphic.Raycast
                 if (graphic.Raycast(pointerPosition, eventCamera))
                 {
                     s_SortedGraphics.Add(graphic);
                 }
             }
 
+            //! 排完序后加入 results 中, 排序依据: UnityEngine.CanvasRenderer.absoluteDepth
             s_SortedGraphics.Sort((g1, g2) => g2.depth.CompareTo(g1.depth));
             totalCount = s_SortedGraphics.Count;
             for (int i = 0; i < totalCount; ++i)

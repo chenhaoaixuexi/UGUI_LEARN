@@ -12,7 +12,7 @@ namespace UnityEngine.UI
         /// Notify all IClippables under the given component that they need to recalculate clipping.
         /// </summary>
         /// <param name="mask">The object thats changed for whose children should be notified.</param>
-        public static void Notify2DMaskStateChanged(Component mask)
+        public static void Notify2DMaskStateChanged(Component mask) //! 在 rectMask2D enable、disable、valid 时调用
         {
             var components = ListPool<Component>.Get();
             mask.GetComponentsInChildren(components);
@@ -43,7 +43,7 @@ namespace UnityEngine.UI
 
                 var toNotify = components[i] as IMaskable;
                 if (toNotify != null)
-                    toNotify.RecalculateMasking();
+                    toNotify.RecalculateMasking(); //! UnityEngine.UI.IMaskable.RecalculateMasking
             }
             ListPool<Component>.Release(components);
         }
@@ -78,7 +78,7 @@ namespace UnityEngine.UI
         /// <param name="transform">The starting transform to search.</param>
         /// <param name="stopAfter">Where the search of parents should stop</param>
         /// <returns>What the proper stencil buffer index should be.</returns>
-        public static int GetStencilDepth(Transform transform, Transform stopAfter)
+        public static int GetStencilDepth(Transform transform, /*传入的是一个 Canvas 节点*/Transform stopAfter) //! 在 UnityEngine.UI.IMaterialModifier.GetModifiedMaterial 的子类里发生调用
         {
             var depth = 0;
             if (transform == stopAfter)
@@ -89,10 +89,10 @@ namespace UnityEngine.UI
             while (t != null)
             {
                 t.GetComponents<Mask>(components);
-                for (var i = 0; i < components.Count; ++i)
+                for (var i = 0; i < components.Count; ++i) //! 遍历 Mask 组件
                 {
                     if (components[i] != null && components[i].MaskEnabled() && components[i].graphic.IsActive())
-                    {
+                    {//! 找到一个 enable 的 , graphic active的, 就+1
                         ++depth;
                         break;
                     }
@@ -101,7 +101,7 @@ namespace UnityEngine.UI
                 if (t == stopAfter)
                     break;
 
-                t = t.parent;
+                t = t.parent; //! 向上递归
             }
             ListPool<Mask>.Release(components);
             return depth;
@@ -184,6 +184,7 @@ namespace UnityEngine.UI
         /// </summary>
         /// <param name="clipper">Starting clipping object.</param>
         /// <param name="masks">The list of Rect masks</param>
+        // ! 被 UnityEngine.UI.RectMask2D.PerformClipping调用
         public static void GetRectMasksForClip(RectMask2D clipper, List<RectMask2D> masks)
         {
             masks.Clear();

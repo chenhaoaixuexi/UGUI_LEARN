@@ -7,6 +7,7 @@ namespace UnityEngine.UI
     /// <summary>
     ///   EditorOnly class for tracking all Graphics.
     /// Used when a source asset is reimported into the editor to ensure that Graphics are updated as intended.
+    ///! 当资源变化是触发更新
     /// </summary>
     public static class GraphicRebuildTracker
     {

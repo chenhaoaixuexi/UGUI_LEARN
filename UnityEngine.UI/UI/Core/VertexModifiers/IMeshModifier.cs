@@ -16,6 +16,8 @@ namespace UnityEngine.UI
     {
         [Obsolete("use IMeshModifier.ModifyMesh (VertexHelper verts) instead", false)]
         void ModifyMesh(Mesh mesh);
+        //! 调用处是 UnityEngine.UI.Graphic.DoMeshGeneration
+        //! 此时可以修改 mesh, 做特效
         void ModifyMesh(VertexHelper verts);
     }
 }

@@ -38,12 +38,14 @@ namespace UnityEngine.UI
     /// <summary>
     /// This is an element that can live on a Canvas.
     /// </summary>
+    //! 子类:  Graphic Image InputField LayoutRebuilder MaskableGraphic RawImage ScrollRect Scrollbar Slider Text Toggle
     public interface ICanvasElement
     {
         /// <summary>
         /// Rebuild the element for the given stage.
         /// </summary>
         /// <param name="executing">The current CanvasUpdate stage being rebuild.</param>
+        //! 绘制的核心!!
         void Rebuild(CanvasUpdate executing);
 
         /// <summary>
@@ -54,11 +56,13 @@ namespace UnityEngine.UI
         /// <summary>
         /// Callback sent when this ICanvasElement has completed layout.
         /// </summary>
+        //! 就 LayoutRebuilder 实现了这个方法
         void LayoutComplete();
 
         /// <summary>
         /// Callback sent when this ICanvasElement has completed Graphic rebuild.
         /// </summary>
+        //! 没有一个子类实现了这个方法
         void GraphicUpdateComplete();
 
         /// <summary>
@@ -83,6 +87,7 @@ namespace UnityEngine.UI
 
         protected CanvasUpdateRegistry()
         {
+            //! 实现绘制的核心入口
             Canvas.willRenderCanvases += PerformUpdate;
         }
 
@@ -152,16 +157,22 @@ namespace UnityEngine.UI
         }
 
         private static readonly Comparison<ICanvasElement> s_SortLayoutFunction = SortLayoutList;
+
+        //! layout 之后做Cull,然后 render
         private void PerformUpdate()
         {
+            // 被 layout API 包起来
             UISystemProfilerApi.BeginSample(UISystemProfilerApi.SampleType.Layout);
             CleanInvalidItems();
 
             m_PerformingLayoutUpdate = true;
 
+            //! layout 重建时有排序,
             m_LayoutRebuildQueue.Sort(s_SortLayoutFunction);
+            // 遍历3次m_LayoutRebuildQueue:  Prelayout、Layout、PostLayout
             for (int i = 0; i <= (int)CanvasUpdate.PostLayout; i++)
             {
+                // 遍历调用 ICanvasElement.Rebuild 方法=>Rebuild 需要自己保证对于不同的阶段的执行
                 for (int j = 0; j < m_LayoutRebuildQueue.Count; j++)
                 {
                     var rebuild = instance.m_LayoutRebuildQueue[j];
@@ -177,16 +188,20 @@ namespace UnityEngine.UI
                 }
             }
 
+            // 遍历调用 LayoutComplete
             for (int i = 0; i < m_LayoutRebuildQueue.Count; ++i)
                 m_LayoutRebuildQueue[i].LayoutComplete();
 
+            //!  清空 m_LayoutRebuildQueue
             instance.m_LayoutRebuildQueue.Clear();
             m_PerformingLayoutUpdate = false;
 
-            // now layout is complete do culling...
+            //! now layout is complete do culling...
             ClipperRegistry.instance.Cull();
 
             m_PerformingGraphicUpdate = true;
+            //! Graphic 重建没有排序
+            //!  PreRender LatePreRender MaxUpdateValue
             for (var i = (int)CanvasUpdate.PreRender; i < (int)CanvasUpdate.MaxUpdateValue; i++)
             {
                 for (var k = 0; k < instance.m_GraphicRebuildQueue.Count; k++)
@@ -227,6 +242,7 @@ namespace UnityEngine.UI
             return count;
         }
 
+        //! 比较两个 ICanvasElement 的父节点数量 => 父节点少的UnityEngine.UI.ICanvasElement 先被 Rebuild
         private static int SortLayoutList(ICanvasElement x, ICanvasElement y)
         {
             Transform t1 = x.transform;

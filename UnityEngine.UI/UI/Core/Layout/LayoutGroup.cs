@@ -256,7 +256,8 @@ namespace UnityEngine.UI
             rect.anchorMax = Vector2.up;
 
             Vector2 anchoredPosition = rect.anchoredPosition;
-            anchoredPosition[axis] = (axis == 0) ? (pos + rect.sizeDelta[axis] * rect.pivot[axis] * scaleFactor) : (-pos - rect.sizeDelta[axis] * (1f - rect.pivot[axis]) * scaleFactor);
+            anchoredPosition[axis] = (axis == 0) ? (pos + rect.sizeDelta[axis] * rect.pivot[axis] * scaleFactor) :
+                (-pos - rect.sizeDelta[axis] * (1f - rect.pivot[axis]) * scaleFactor);
             rect.anchoredPosition = anchoredPosition;
         }
 

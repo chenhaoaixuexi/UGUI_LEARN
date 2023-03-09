@@ -3,6 +3,8 @@ using UnityEngine.Events;
 
 namespace UnityEngine.UI.CoroutineTween
 {
+
+    //! 都是internal的类
     // Base interface for tweeners,
     // using an interface instead of
     // an abstract class as we want the

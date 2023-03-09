@@ -1,0 +1,26 @@
+@startuml
+
+interface IPointerDownHandler
+interface IPointerUpHandler
+interface IPointerEnterHandler
+interface IPointerExitHandler
+interface ISelectHandler
+interface IDeselectHandler
+
+class Selection {
+  +OnPointerDown(PointerEventData eventData) : void
+  +OnPointerUp(PointerEventData eventData) : void
+  +OnPointerEnter(PointerEventData eventData) : void
+  +OnPointerExit(PointerEventData eventData) : void
+  +OnSelect(BaseEventData eventData) : void
+  +OnDeselect(BaseEventData eventData) : void
+}
+
+IPointerDownHandler <|.. Selection
+IPointerUpHandler <|.. Selection
+IPointerEnterHandler <|.. Selection
+IPointerExitHandler <|.. Selection
+ISelectHandler <|.. Selection
+IDeselectHandler <|.. Selection
+
+@enduml

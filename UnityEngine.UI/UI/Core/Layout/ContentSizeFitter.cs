@@ -95,7 +95,7 @@ namespace UnityEngine.UI
             // Set size to min or preferred size
             if (fitting == FitMode.MinSize)
                 rectTransform.SetSizeWithCurrentAnchors((RectTransform.Axis)axis, LayoutUtility.GetMinSize(m_Rect, axis));
-            else
+            else //! PreferredSize
                 rectTransform.SetSizeWithCurrentAnchors((RectTransform.Axis)axis, LayoutUtility.GetPreferredSize(m_Rect, axis));
         }
 

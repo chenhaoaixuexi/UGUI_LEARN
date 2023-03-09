@@ -85,7 +85,7 @@ namespace UnityEngine.UI
             if (m_ShouldRecalculateStencil)
             {
                 var rootCanvas = MaskUtilities.FindRootSortOverrideCanvas(transform);
-                m_StencilValue = maskable ? MaskUtilities.GetStencilDepth(transform, rootCanvas) : 0;
+                m_StencilValue = maskable/*Does this graphic allow masking?*/ ? MaskUtilities.GetStencilDepth(transform, rootCanvas) : 0;
                 m_ShouldRecalculateStencil = false;
             }
 
@@ -106,17 +106,17 @@ namespace UnityEngine.UI
         /// <summary>
         /// See IClippable.Cull
         /// </summary>
-        public virtual void Cull(Rect clipRect, bool validRect)
+        public virtual void Cull(Rect clipRect, bool validRect) //! UnityEngine.UI.RectMask2D.PerformClipping 里调用
         {
-            var cull = !validRect || !clipRect.Overlaps(rootCanvasRect, true);
+            var cull = /*非法的 rect*/!validRect || /*没有交集*/!clipRect.Overlaps(rootCanvasRect, true);
             UpdateCull(cull);
         }
 
-        private void UpdateCull(bool cull)
+        private void UpdateCull(bool cull) //! 最终委托到 UnityEngine.UI.Graphic.Rebuild
         {
             if (canvasRenderer.cull != cull)
             {
-                canvasRenderer.cull = cull;
+                canvasRenderer.cull = cull; //! ShouldCull
                 UISystemProfilerApi.AddMarker("MaskableGraphic.cullingChanged", this);
                 m_OnCullStateChanged.Invoke(cull);
                 OnCullingChanged();
@@ -202,6 +202,7 @@ namespace UnityEngine.UI
         }
 
         readonly Vector3[] m_Corners = new Vector3[4];
+        //! rootCanvasRect 属性可以用于确定 UI 元素相对于其所在画布的位置和大小，这对布局和定位非常有用。
         private Rect rootCanvasRect
         {
             get
@@ -231,10 +232,11 @@ namespace UnityEngine.UI
             }
         }
 
+        //! 更新 RectMask2D m_ParentMask
         private void UpdateClipParent()
         {
             var newParent = (maskable && IsActive()) ? MaskUtilities.GetRectMaskForClippable(this) : null;
-
+            //! 从旧的父级中删除此对象并更新剪裁。
             // if the new parent is different OR is now inactive
             if (m_ParentMask != null && (newParent != m_ParentMask || !newParent.IsActive()))
             {
@@ -242,6 +244,7 @@ namespace UnityEngine.UI
                 UpdateCull(false);
             }
 
+            //! 如果新的父级不为空且处于活动状态，则将此对象添加到新的父级中。最后，将新的父级赋值给 m_ParentMask。
             // don't re-add it if the newparent is inactive
             if (newParent != null && newParent.IsActive())
                 newParent.AddClippable(this);

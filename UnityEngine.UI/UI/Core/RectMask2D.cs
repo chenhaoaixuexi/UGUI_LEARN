@@ -205,7 +205,7 @@ namespace UnityEngine.UI
                     maskableTarget.Cull(clipRect, validRect);
                 }
             }
-            else if (m_ForceClip)
+            else if (m_ForceClip) //! 什么时候是 false , 在执行完UnityEngine.UI.RectMask2D.PerformClipping后 false
             {
                 foreach (IClippable clipTarget in m_ClipTargets)
                 {
@@ -225,7 +225,7 @@ namespace UnityEngine.UI
                 foreach (MaskableGraphic maskableTarget in m_MaskableTargets)
                 {
                     if (maskableTarget.canvasRenderer.hasMoved)
-                        maskableTarget.Cull(clipRect, validRect);
+                        maskableTarget.Cull(clipRect, validRect); //! 下一次关掉渲染
                 }
             }
 
@@ -237,7 +237,7 @@ namespace UnityEngine.UI
         /// Add a IClippable to be tracked by the mask.
         /// </summary>
         /// <param name="clippable">Add the clippable object for this mask</param>
-        public void AddClippable(IClippable clippable)
+        public void AddClippable(IClippable clippable) //! 只在 UnityEngine.UI.MaskableGraphic.UpdateClipParent 调用
         {
             if (clippable == null)
                 return;
@@ -256,7 +256,7 @@ namespace UnityEngine.UI
         /// Remove an IClippable from being tracked by the mask.
         /// </summary>
         /// <param name="clippable">Remove the clippable object from this mask</param>
-        public void RemoveClippable(IClippable clippable)
+        public void RemoveClippable(IClippable clippable) //! 只在 UnityEngine.UI.MaskableGraphic.UpdateClipParent 调用
         {
             if (clippable == null)
                 return;

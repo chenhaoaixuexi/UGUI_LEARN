@@ -135,8 +135,9 @@ namespace UnityEngine.UI
                 return baseMaterial;
 
             var rootSortCanvas = MaskUtilities.FindRootSortOverrideCanvas(transform);
+            //! 计算当前遮罩元素在UI层级中的模板深度。
             var stencilDepth = MaskUtilities.GetStencilDepth(transform, rootSortCanvas);
-            if (stencilDepth >= 8)
+            if (stencilDepth >= 8) //!如果模板深度大于等于8，将发出警告并返回基本材质，因为模板缓冲区只支持8个不同的遮罩层。
             {
                 Debug.LogWarning("Attempting to use a stencil mask with depth > 8", gameObject);
                 return baseMaterial;
@@ -146,17 +147,18 @@ namespace UnityEngine.UI
 
             // if we are at the first level...
             // we want to destroy what is there
-            if (desiredStencilBit == 1)
+            if (desiredStencilBit == 1) //! 如果是第一层遮罩，使用一个简单的方法。否则，根据所需的模板位生成一个更复杂的遮罩材质。
             {
+                //!   添加一个新的遮罩材质，设置模板操作为Replace，比较函数为Always。
                 var maskMaterial = StencilMaterial.Add(baseMaterial, 1, StencilOp.Replace, CompareFunction.Always, m_ShowMaskGraphic ? ColorWriteMask.All : 0);
                 StencilMaterial.Remove(m_MaskMaterial);
                 m_MaskMaterial = maskMaterial;
-
+                //!   添加一个新的遮罩材质，设置模板操作为Zero，比较函数为Always。
                 var unmaskMaterial = StencilMaterial.Add(baseMaterial, 1, StencilOp.Zero, CompareFunction.Always, 0);
                 StencilMaterial.Remove(m_UnmaskMaterial);
                 m_UnmaskMaterial = unmaskMaterial;
                 graphic.canvasRenderer.popMaterialCount = 1;
-                graphic.canvasRenderer.SetPopMaterial(m_UnmaskMaterial, 0);
+                graphic.canvasRenderer.SetPopMaterial(m_UnmaskMaterial, 0); //! 触发多余 draw Call 的地方应该是这里
 
                 return m_MaskMaterial;
             }
@@ -171,7 +173,7 @@ namespace UnityEngine.UI
             StencilMaterial.Remove(m_UnmaskMaterial);
             m_UnmaskMaterial = unmaskMaterial2;
             graphic.canvasRenderer.popMaterialCount = 1;
-            graphic.canvasRenderer.SetPopMaterial(m_UnmaskMaterial, 0);
+            graphic.canvasRenderer.SetPopMaterial(m_UnmaskMaterial, 0);//! 触发多余 draw Call 的地方应该是这里
 
             return m_MaskMaterial;
         }

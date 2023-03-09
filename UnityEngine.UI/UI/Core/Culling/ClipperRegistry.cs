@@ -13,6 +13,7 @@ namespace UnityEngine.UI
     {
         static ClipperRegistry s_Instance;
 
+        //! 注册时机是: UnityEngine.UI.ClipperRegistry.Register 方法
         readonly IndexedSet<IClipper> m_Clippers = new IndexedSet<IClipper>();
 
         protected ClipperRegistry()
@@ -39,7 +40,8 @@ namespace UnityEngine.UI
         /// <summary>
         /// Perform the clipping on all registered IClipper
         /// </summary>
-        public void Cull()
+        //! 被 UnityEngine.UI.CanvasUpdateRegistry.PerformUpdate 调用
+        public void Cull() //!  PerformClipping 完不会清空 m_Clippers
         {
             for (var i = 0; i < m_Clippers.Count; ++i)
             {
@@ -62,6 +64,7 @@ namespace UnityEngine.UI
         /// UnRegister a IClipper element
         /// </summary>
         /// <param name="c">The Element to try and remove.</param>
+        //! 调用时机: UnityEngine.UI.RectMask2D.OnDisable
         public static void Unregister(IClipper c)
         {
             instance.m_Clippers.Remove(c);

@@ -43,7 +43,7 @@ namespace UnityEngine.UI
         /// </summary>
         /// <param name="c">The canvas the graphic will be associated to</param>
         /// <param name="graphic">The graphic in question.</param>
-        public static void RegisterGraphicForCanvas(Canvas c, Graphic graphic)
+        public static void RegisterGraphicForCanvas(Canvas c, Graphic graphic) // 存一个 canvas 和 graphic 映射
         {
             if (c == null)
                 return;
@@ -86,11 +86,11 @@ namespace UnityEngine.UI
         private static readonly List<Graphic> s_EmptyList = new List<Graphic>();
 
         /// <summary>
-        /// Get the list of associated graphics that are registered to a canvas.
+        /// !Get the list of associated graphics that are registered to a canvas.
         /// </summary>
         /// <param name="canvas">The canvas whose Graphics we are looking for</param>
         /// <returns>The list of all Graphics for the given Canvas.</returns>
-        public static IList<Graphic> GetGraphicsForCanvas(Canvas canvas)
+        public static IList</*!UnityEngine.UI.Graphic*/Graphic> GetGraphicsForCanvas(Canvas canvas)
         {
             IndexedSet<Graphic> graphics;
             if (instance.m_Graphics.TryGetValue(canvas, out graphics))

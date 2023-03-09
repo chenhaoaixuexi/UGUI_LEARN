@@ -3,7 +3,7 @@ namespace UnityEngine.UI
     /// <summary>
     ///   Interface that can be used to recieve clipping callbacks as part of the canvas update loop.
     /// </summary>
-    public interface IClipper
+    public interface IClipper //! 委托给 UnityEngine.UI.ClipperRegistry.Cull
     {
         /// <summary>
         /// Function to to cull / clip children elements.
@@ -11,7 +11,7 @@ namespace UnityEngine.UI
         /// <remarks>
         /// Called after layout and before Graphic update of the Canvas update loop.
         /// </remarks>
-
+        //! 唯一的实现是UnityEngine.UI.RectMask2D.PerformClipping
         void PerformClipping();
     }
 
@@ -28,7 +28,7 @@ namespace UnityEngine.UI
         /// <summary>
         /// Will be called when the state of a parent IClippable changed.
         /// </summary>
-        void RecalculateClipping();
+        void RecalculateClipping(); ////! 在 rectMask2D enable、disable、valid 时调用
 
         /// <summary>
         /// The RectTransform of the clippable.

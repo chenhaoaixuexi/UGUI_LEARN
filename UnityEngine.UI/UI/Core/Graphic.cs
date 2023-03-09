@@ -159,11 +159,12 @@ namespace UnityEngine.UI
         public virtual bool raycastTarget { get { return m_RaycastTarget; } set { m_RaycastTarget = value; } }
 
         [NonSerialized] private RectTransform m_RectTransform;
+        //! 所有的绘制的核心
         [NonSerialized] private CanvasRenderer m_CanvasRenderer;
         [NonSerialized] private Canvas m_Canvas;
 
         [NonSerialized] private bool m_VertsDirty;
-        [NonSerialized] private bool m_MaterialDirty;
+        [NonSerialized] private bool m_MaterialDirty; //!SetMaterialDirty 赋值为 true
 
         [NonSerialized] protected UnityAction m_OnDirtyLayoutCallback;
         [NonSerialized] protected UnityAction m_OnDirtyVertsCallback;
@@ -178,6 +179,7 @@ namespace UnityEngine.UI
         [NonSerialized]
         private readonly TweenRunner<ColorTween> m_ColorTweenRunner;
 
+        //! 除了Graphic构造函数, 其他地方都是 false
         protected bool useLegacyMeshGeneration { get; set; }
 
         // Called by Unity prior to deserialization,
@@ -246,7 +248,7 @@ namespace UnityEngine.UI
         /// </remarks>
         public virtual void SetVerticesDirty()
         {
-            if (!IsActive())
+            if (!IsActive()) //! 非 active 直接返回
                 return;
 
             m_VertsDirty = true;
@@ -262,6 +264,7 @@ namespace UnityEngine.UI
         /// <remarks>
         /// Send a OnDirtyMaterialCallback notification if any elements are registered. See RegisterDirtyMaterialCallback
         /// </remarks>
+        //! 脏标识, 执行延迟到 Rebuild  下=> 进一步委托到 UpdateMaterial
         public virtual void SetMaterialDirty()
         {
             if (!IsActive())
@@ -323,7 +326,7 @@ namespace UnityEngine.UI
         ///     Graphic - 4
         ///  Graphic - 5
         ///
-        /// This value is used to determine draw and event ordering.
+        ///! This value is used to determine draw and event ordering.
         /// </example>
         public int depth { get { return canvasRenderer.absoluteDepth; } }
 
@@ -387,6 +390,7 @@ namespace UnityEngine.UI
         /// <summary>
         /// A reference to the CanvasRenderer populated by this Graphic.
         /// </summary>
+        //! 代码中会调用 CanvasRenderer来 setMesh、 setMaterial、setColor 等
         public CanvasRenderer canvasRenderer
         {
             get
@@ -412,7 +416,7 @@ namespace UnityEngine.UI
         /// <summary>
         /// The Material set by the user
         /// </summary>
-        public virtual Material material
+        public virtual Material material //! 真正被 setMateria 的 不是这个 材质
         {
             get
             {
@@ -482,6 +486,7 @@ namespace UnityEngine.UI
             if (s_WhiteTexture == null)
                 s_WhiteTexture = Texture2D.whiteTexture;
 
+            //! 开刷
             SetAllDirty();
         }
 
@@ -559,6 +564,7 @@ namespace UnityEngine.UI
         /// <remarks>
         /// See CanvasUpdateRegistry for more details on the canvas update cycle.
         /// </remarks>
+        //! UpdateGeometry 和 UpdateMaterial
         public virtual void Rebuild(CanvasUpdate update)
         {
             if (canvasRenderer == null || canvasRenderer.cull)
@@ -569,7 +575,8 @@ namespace UnityEngine.UI
                 case CanvasUpdate.PreRender:
                     if (m_VertsDirty)
                     {
-                        UpdateGeometry();
+                        //! DoMeshGeneration 网格重建
+                        UpdateGeometry(); //! Geometry=> 几何的
                         m_VertsDirty = false;
                     }
                     if (m_MaterialDirty)
@@ -590,7 +597,8 @@ namespace UnityEngine.UI
         /// <summary>
         /// Call to update the Material of the graphic onto the CanvasRenderer.
         /// </summary>
-        protected virtual void UpdateMaterial()
+        //! 委托给 canvasRenderer
+        protected virtual void UpdateMaterial() //! 被 IMage 重写
         {
             if (!IsActive())
                 return;
@@ -603,7 +611,7 @@ namespace UnityEngine.UI
         /// <summary>
         /// Call to update the geometry of the Graphic onto the CanvasRenderer.
         /// </summary>
-        protected virtual void UpdateGeometry()
+        protected virtual void UpdateGeometry/*几何*/() //! 手画mesh //! 被 IMage 重写
         {
             if (useLegacyMeshGeneration)
             {
@@ -615,6 +623,8 @@ namespace UnityEngine.UI
             }
         }
 
+        //! Image 、RawIamge、Text 都是走这个逻辑
+        //! useLegacyMeshGeneration 为 false
         private void DoMeshGeneration()
         {
             if (rectTransform != null && rectTransform.rect.width >= 0 && rectTransform.rect.height >= 0)
@@ -626,11 +636,12 @@ namespace UnityEngine.UI
             GetComponents(typeof(IMeshModifier), components);
 
             for (var i = 0; i < components.Count; i++)
-                ((IMeshModifier)components[i]).ModifyMesh(s_VertexHelper);
+                ((IMeshModifier)components[i]).ModifyMesh(s_VertexHelper); //! 特效实现处
 
             ListPool<Component>.Release(components);
 
             s_VertexHelper.FillMesh(workerMesh);
+            //! 委托到 UnityEngine.CanvasRenderer.SetMesh
             canvasRenderer.SetMesh(workerMesh);
         }
 
@@ -693,17 +704,21 @@ namespace UnityEngine.UI
         }
 
         /// <summary>
-        /// Callback function when a UI element needs to generate vertices. Fills the vertex buffer data.
+        /// Callback function when a UI element needs to generate vertices.
+        //! Fills the vertex buffer data.
         /// </summary>
         /// <param name="vh">VertexHelper utility.</param>
         /// <remarks>
         /// Used by Text, UI.Image, and RawImage for example to generate vertices specific to their use case.
         /// </remarks>
+        //! 最终会在 DoMeshGeneration 里调用
+        //! 只有 Image子类调用了 Graphic父类的OnPopulateMesh(还是在activeSprite为 null 的情况下
         protected virtual void OnPopulateMesh(VertexHelper vh)
         {
             var r = GetPixelAdjustedRect();
             var v = new Vector4(r.x, r.y, r.x + r.width, r.y + r.height);
 
+            //! 绘制背景色
             Color32 color32 = color;
             vh.Clear();
             vh.AddVert(new Vector3(v.x, v.y), color32, new Vector2(0f, 0f));
@@ -773,12 +788,14 @@ namespace UnityEngine.UI
             bool ignoreParentGroups = false;
             bool continueTraversal = true;
 
+            //! t = t.parent 向上爬树, 如果没有IlValid, 那么久返回true
             while (t != null)
             {
                 t.GetComponents(components);
                 for (var i = 0; i < components.Count; i++)
                 {
                     var canvas = components[i] as Canvas;
+                    //! 遇到 overrideSorting 停止爬树
                     if (canvas != null && canvas.overrideSorting)
                         continueTraversal = false;
 
@@ -814,6 +831,7 @@ namespace UnityEngine.UI
                 t = continueTraversal ? t.parent : null;
             }
             ListPool<Component>.Release(components);
+            //! 知道最后面 是返回 true
             return true;
         }
 
@@ -851,10 +869,11 @@ namespace UnityEngine.UI
         /// Note: This is only accurate if the Graphic root Canvas is in Screen Space.
         /// </remarks>
         /// <returns>A Pixel perfect Rect.</returns>
+        //! This is only accurate if the Graphic root Canvas is in Screen Space.
         public Rect GetPixelAdjustedRect()
         {
             if (!canvas || canvas.renderMode == RenderMode.WorldSpace || canvas.scaleFactor == 0.0f || !canvas.pixelPerfect)
-                return rectTransform.rect;
+                return rectTransform.rect;//! 不精确的
             else
                 return RectTransformUtility.PixelAdjustRect(rectTransform, canvas);
         }
@@ -896,7 +915,8 @@ namespace UnityEngine.UI
                 (useRGB ? ColorTween.ColorTweenMode.RGB : ColorTween.ColorTweenMode.Alpha));
 
             var colorTween = new ColorTween {duration = duration, startColor = canvasRenderer.GetColor(), targetColor = targetColor};
-            colorTween.AddOnChangedCallback(canvasRenderer.SetColor);
+            //! 对应的代价是 高频DoMeshGeneration ,里面会算 mesh和mesh赋值
+            colorTween.AddOnChangedCallback(canvasRenderer.SetColor/*这里不会触发SetVerticesDirty, 但是直接修改颜色会触发 SetVerticesDirty*/);
             colorTween.ignoreTimeScale = ignoreTimeScale;
             colorTween.tweenMode = mode;
             m_ColorTweenRunner.StartTween(colorTween);

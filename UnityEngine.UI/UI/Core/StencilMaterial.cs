@@ -34,6 +34,7 @@ namespace UnityEngine.UI
         /// <summary>
         /// Add a new material using the specified base and stencil ID.
         /// </summary>
+        //! UnityEngine.UI.Mask.GetModifiedMaterial 中的调用都是传的 UnityEngine.Rendering.CompareFunction.Always
         public static Material Add(Material baseMat, int stencilID, StencilOp operation, CompareFunction compareFunction, ColorWriteMask colorWriteMask)
         {
             return Add(baseMat, stencilID, operation, compareFunction, colorWriteMask, 255, 255);
@@ -42,10 +43,15 @@ namespace UnityEngine.UI
         /// <summary>
         /// Add a new material using the specified base and stencil ID.
         /// </summary>
+        //! 核心方法
+        //! UnityEngine.UI.Mask.GetModifiedMaterial 中的调用都是传的 UnityEngine.Rendering.CompareFunction.Equal
+        //! 在UnityEngine.UI.MaskableGraphic.GetModifiedMaterial:  StencilOp.Keep, CompareFunction.Equal, ColorWriteMask.All
         public static Material Add(Material baseMat, int stencilID, StencilOp operation, CompareFunction compareFunction, ColorWriteMask colorWriteMask, int readMask, int writeMask)
         {
             if ((stencilID <= 0 && colorWriteMask == ColorWriteMask.All) || baseMat == null)
                 return baseMat;
+
+            #region 关于 baseMat(material) 的检查
 
             if (!baseMat.HasProperty("_Stencil"))
             {
@@ -78,6 +84,10 @@ namespace UnityEngine.UI
                 return baseMat;
             }
 
+            #endregion
+
+            #region  m_List 已经有了 计数+1,返回
+
             for (int i = 0; i < m_List.Count; ++i)
             {
                 MatEntry ent = m_List[i];
@@ -95,6 +105,8 @@ namespace UnityEngine.UI
                 }
             }
 
+            #endregion
+
             var newEnt = new MatEntry();
             newEnt.count = 1;
             newEnt.baseMat = baseMat;
@@ -108,6 +120,7 @@ namespace UnityEngine.UI
             newEnt.colorMask = colorWriteMask;
             newEnt.useAlphaClip = operation != StencilOp.Keep && writeMask > 0;
 
+            //! 魔改 customMat 里面的值
             newEnt.customMat.name = string.Format("Stencil Id:{0}, Op:{1}, Comp:{2}, WriteMask:{3}, ReadMask:{4}, ColorMask:{5} AlphaClip:{6} ({7})", stencilID, operation, compareFunction, writeMask, readMask, colorWriteMask, newEnt.useAlphaClip, baseMat.name);
 
             newEnt.customMat.SetInt("_Stencil", stencilID);
