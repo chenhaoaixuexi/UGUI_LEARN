@@ -1,0 +1,14 @@
+@startuml
+title EventSystem Update Sequence
+
+participant EventSystem
+participant StandaloneInputModule
+participant ExecuteEvents
+
+EventSystem -> StandaloneInputModule : Update()
+StandaloneInputModule -> StandaloneInputModule : Process()
+StandaloneInputModule -> StandaloneInputModule : ProcessTouchEvents()
+StandaloneInputModule -> StandaloneInputModule : ProcessTouchPress()
+StandaloneInputModule -> ExecuteEvents : ExecuteXXX()
+
+@enduml

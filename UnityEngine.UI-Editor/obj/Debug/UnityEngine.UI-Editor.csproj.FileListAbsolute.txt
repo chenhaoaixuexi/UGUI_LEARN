@@ -1,0 +1,11 @@
+/Users/apple/Work/github/unity/uGUI/UnityEngine.UI-Editor/obj/Debug/UnityEngine.UI-Editor.csproj.AssemblyReference.cache
+/Users/apple/Work/github/unity/uGUI/UnityEngine.UI-Editor/obj/Debug/UnityEngine.UI-Editor.csproj.CoreCompileInputs.cache
+/Users/apple/Work/github/unity/uGUI/UnityEngine.UI-Editor/bin/Debug/UnityEngine.UI.dll
+/Users/apple/Work/github/unity/uGUI/UnityEngine.UI-Editor/bin/Debug/UnityEngine.UI.pdb
+/Users/apple/Work/github/unity/uGUI/UnityEngine.UI-Editor/bin/Debug/UnityEditor.dll
+/Users/apple/Work/github/unity/uGUI/UnityEngine.UI-Editor/bin/Debug/UnityEngine.dll
+/Users/apple/Work/github/unity/uGUI/UnityEngine.UI-Editor/bin/Debug/UnityEditor.dll.mdb
+/Users/apple/Work/github/unity/uGUI/UnityEngine.UI-Editor/bin/Debug/UnityEngine.dll.mdb
+/Users/apple/Work/github/unity/uGUI/UnityEngine.UI-Editor/obj/Debug/UnityEngine.UI-Editor.csproj.CopyComplete
+/Users/apple/Work/github/unity/uGUI/UnityEngine.UI-Editor/obj/Debug/UnityEngine.UI.dll
+/Users/apple/Work/github/unity/uGUI/UnityEngine.UI-Editor/obj/Debug/UnityEngine.UI.pdb

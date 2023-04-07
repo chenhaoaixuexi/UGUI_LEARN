@@ -36,7 +36,7 @@ namespace UnityEngine.EventSystems
             {
                 int index = m_EventSystems.IndexOf(value);
 
-                if (index >= 0)
+                if (index >= 0) //! 备用EventSystems逻辑
                 {
                     m_EventSystems.RemoveAt(index);
                     m_EventSystems.Insert(0, value);

@@ -1,0 +1,371 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="b96e398c-948e-4d2c-9d00-e18ed4904af8" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/UnityEngine.UI/EventSystem/EventHandle.puml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UnityEngine.UI/EventSystem/EventSystem.cs" beforeDir="false" afterPath="$PROJECT_DIR$/UnityEngine.UI/EventSystem/EventSystem.cs" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileColors">
+    <fileColor scope="ignore" color="a39d9d" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="UML Sequence" />
+      </list>
+    </option>
+  </component>
+  <component name="GitToolBoxStore">
+    <option name="projectConfigVersion" value="5" />
+    <option name="recentBranches">
+      <RecentBranches>
+        <option name="branchesForRepo">
+          <list>
+            <RecentBranchesForRepo>
+              <option name="branches">
+                <list>
+                  <RecentBranch>
+                    <option name="branchName" value="main" />
+                    <option name="lastUsedInstant" value="1680238289" />
+                  </RecentBranch>
+                  <RecentBranch>
+                    <option name="branchName" value="2019.1" />
+                    <option name="lastUsedInstant" value="1680238288" />
+                  </RecentBranch>
+                </list>
+              </option>
+              <option name="repositoryRootUrl" value="file://$PROJECT_DIR$" />
+            </RecentBranchesForRepo>
+          </list>
+        </option>
+      </RecentBranches>
+    </option>
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/ILViewer/8d66f97d933146c7a9cd76567bcbcd252c8400/78/572109ce/02000659.il" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/ILViewer/8d66f97d933146c7a9cd76567bcbcd252c8400/a5/b52ce1c2/0200006D.il" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/ILViewer/8d66f97d933146c7a9cd76567bcbcd252c8400/c9/f684a9e3/020000CB.il" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/ILViewer/8d66f97d933146c7a9cd76567bcbcd252c8400/fe/aa84fe93/020003FB.il" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/4f01bef42c9046f7bc595d3dc3bb64c470ae00/1e/35271042/Selection.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/4f01bef42c9046f7bc595d3dc3bb64c470ae00/6a/7b87627c/TextRenderingCommands.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/4f01bef42c9046f7bc595d3dc3bb64c470ae00/75/7e1288ea/Editor.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/4f01bef42c9046f7bc595d3dc3bb64c470ae00/f1/8978bd73/ShaderImporterInspector.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/8d66f97d933146c7a9cd76567bcbcd252c8400/05/c8e29188/GameObject.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/8d66f97d933146c7a9cd76567bcbcd252c8400/06/d6e41d72/TouchScreenKeyboard.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/8d66f97d933146c7a9cd76567bcbcd252c8400/07/4f4f9024/ColorWriteMask.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/8d66f97d933146c7a9cd76567bcbcd252c8400/0b/27a36925/Font.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/8d66f97d933146c7a9cd76567bcbcd252c8400/0d/02ca7a17/Vector2.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/8d66f97d933146c7a9cd76567bcbcd252c8400/0e/c40782f3/RequiredByNativeCodeAttribute.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/8d66f97d933146c7a9cd76567bcbcd252c8400/11/58e35567/Component.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/8d66f97d933146c7a9cd76567bcbcd252c8400/11/7bf0a525/DrivenRectTransformTracker.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/8d66f97d933146c7a9cd76567bcbcd252c8400/19/a262481b/TouchScreenKeyboardType.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/8d66f97d933146c7a9cd76567bcbcd252c8400/1b/101a277e/Rect.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/8d66f97d933146c7a9cd76567bcbcd252c8400/1e/15fde130/MonoBehaviour.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/8d66f97d933146c7a9cd76567bcbcd252c8400/1f/d50949e6/GUILayout.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/8d66f97d933146c7a9cd76567bcbcd252c8400/2f/91126d46/Ray.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/8d66f97d933146c7a9cd76567bcbcd252c8400/32/ed7de9f8/Display.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/8d66f97d933146c7a9cd76567bcbcd252c8400/3a/b607deae/TextGenerator.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/8d66f97d933146c7a9cd76567bcbcd252c8400/3f/a768577f/CanvasGroup.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/8d66f97d933146c7a9cd76567bcbcd252c8400/43/6020a672/DataUtility.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/8d66f97d933146c7a9cd76567bcbcd252c8400/4d/31163296/Renderer.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/8d66f97d933146c7a9cd76567bcbcd252c8400/4e/e3ad4095/Vector4.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/8d66f97d933146c7a9cd76567bcbcd252c8400/50/a9a3f61f/RequireComponent.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/8d66f97d933146c7a9cd76567bcbcd252c8400/52/f8f577c8/TouchScreenKeyboard_InternalConstructorHelperArgum.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/8d66f97d933146c7a9cd76567bcbcd252c8400/56/93bb5bde/UIVertex.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/8d66f97d933146c7a9cd76567bcbcd252c8400/5a/909a60dc/Vector3.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/8d66f97d933146c7a9cd76567bcbcd252c8400/5b/f8e2cb39/Material.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/8d66f97d933146c7a9cd76567bcbcd252c8400/5c/35e6707f/TextGenerationSettings.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/8d66f97d933146c7a9cd76567bcbcd252c8400/65/94161ee5/RectTransformUtility.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/8d66f97d933146c7a9cd76567bcbcd252c8400/6f/2141e5c7/TouchPhase.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/8d66f97d933146c7a9cd76567bcbcd252c8400/71/3a1a8803/Animator.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/8d66f97d933146c7a9cd76567bcbcd252c8400/7c/6f0b5fb1/GradientAlphaKey.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/8d66f97d933146c7a9cd76567bcbcd252c8400/80/e35bc62e/TextMesh.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/8d66f97d933146c7a9cd76567bcbcd252c8400/81/2b2a1c1f/CanvasRenderer.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/8d66f97d933146c7a9cd76567bcbcd252c8400/83/4ef7f360/TouchType.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/8d66f97d933146c7a9cd76567bcbcd252c8400/85/0640f1a3/Camera.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/8d66f97d933146c7a9cd76567bcbcd252c8400/8b/5ad14958/StencilOp.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/8d66f97d933146c7a9cd76567bcbcd252c8400/8c/01c63df5/Transform.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/8d66f97d933146c7a9cd76567bcbcd252c8400/92/7901aeb9/UIVertex.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/8d66f97d933146c7a9cd76567bcbcd252c8400/93/dbedc202/Graphics.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/8d66f97d933146c7a9cd76567bcbcd252c8400/9f/53d9df89/UnityEvent.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/8d66f97d933146c7a9cd76567bcbcd252c8400/ac/9ae94bf2/ICanvasRaycastFilter.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/8d66f97d933146c7a9cd76567bcbcd252c8400/b2/d851df63/Gradient.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/8d66f97d933146c7a9cd76567bcbcd252c8400/b4/7319604a/Object.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/8d66f97d933146c7a9cd76567bcbcd252c8400/b5/8029b734/CompareFunction.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/8d66f97d933146c7a9cd76567bcbcd252c8400/bf/a0081097/RectTransform.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/8d66f97d933146c7a9cd76567bcbcd252c8400/c1/faecd06e/RenderMode.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/8d66f97d933146c7a9cd76567bcbcd252c8400/c9/b6412fe2/UISystemProfilerApi.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/8d66f97d933146c7a9cd76567bcbcd252c8400/d4/6b0de6cf/Canvas.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/8d66f97d933146c7a9cd76567bcbcd252c8400/da/db4ced1d/SpriteRenderer.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/8d66f97d933146c7a9cd76567bcbcd252c8400/dc/0d756ef2/GradientColorKey.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/8d66f97d933146c7a9cd76567bcbcd252c8400/dc/ffd5db69/Behaviour.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/8d66f97d933146c7a9cd76567bcbcd252c8400/e7/10a0c5d0/DisallowMultipleComponent.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/8d66f97d933146c7a9cd76567bcbcd252c8400/e8/4e2aaa1e/Bounds.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/8d66f97d933146c7a9cd76567bcbcd252c8400/eb/32044ef3/Sprite.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/8d66f97d933146c7a9cd76567bcbcd252c8400/f1/f6a6f704/Touch.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/924ca7f27c7a4236a16ae8227d9ac1e86cc00/79/746a9779/LinkedList`1.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/bf8183a45d5847d885eedffd83533a7b99200/5e/2cc8c76b/List`1.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/bf8183a45d5847d885eedffd83533a7b99200/78/a4b75c64/Single.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/bf8183a45d5847d885eedffd83533a7b99200/91/10001847/IDisposable.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/bf8183a45d5847d885eedffd83533a7b99200/c7/cf6a6cf9/Int32.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/bf8183a45d5847d885eedffd83533a7b99200/df/bf0635a9/ArrayList.cs" root0="SKIP_HIGHLIGHTING" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="NamedScopeManager">
+    <scope name="ignore" pattern="file[rider.module]:UnityEngine.UI/UI/Core/SetPropertyUtility.cs||file[rider.module]:UnityEngine.UI/UI/Core/Misc.cs||file[rider.module]:UnityEngine.UI/UI/Core/IGraphicEnabledDisabled.cs||file[rider.module]:UnityEngine.UI/UI/Core/SpecializedCollections//*||file[rider.module]:UnityEngine.UI/UI/Core/DefaultControls.cs||file[rider.module]:UnityEngine.UI/UI/Core/IMask.cs" />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="SWEA" />
+  </component>
+  <component name="ProjectId" id="2MUuCoX8WDD4YRFLRqkkx7p1q1s" />
+  <component name="ProjectViewState">
+    <option name="autoscrollFromSource" value="true" />
+    <option name="autoscrollToSource" value="true" />
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+    <option name="showMembers" value="true" />
+    <option name="showVisibilityIcons" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;DefaultPlantUmlFileTemplate&quot;: &quot;UML Sequence&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;editorconfig.notification&quot;: &quot;lf                   &quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="RunManager">
+    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost">
+      <option name="allowRunningInParallel" value="false" />
+      <option name="listenPortForConnections" value="false" />
+      <option name="pid" />
+      <option name="projectPathOnTarget" />
+      <option name="selectedOptions">
+        <list />
+      </option>
+      <method v="2" />
+    </configuration>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="SvnConfiguration">
+    <configuration>$USER_HOME$/.subversion</configuration>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="b96e398c-948e-4d2c-9d00-e18ed4904af8" name="Changes" comment="" />
+      <created>1677834356937</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1677834356937</updated>
+      <workItem from="1677834366884" duration="33591000" />
+      <workItem from="1677985692217" duration="3703000" />
+      <workItem from="1678085679512" duration="3366000" />
+      <workItem from="1678098992893" duration="2662000" />
+      <workItem from="1678167343336" duration="1452000" />
+      <workItem from="1678253246337" duration="2266000" />
+      <workItem from="1678337015310" duration="861000" />
+      <workItem from="1678337962175" duration="3066000" />
+      <workItem from="1678365507778" duration="2489000" />
+      <workItem from="1678440299692" duration="1627000" />
+      <workItem from="1678514771450" duration="561000" />
+      <workItem from="1678515345949" duration="14549000" />
+      <workItem from="1678632766461" duration="216000" />
+      <workItem from="1678633068211" duration="293000" />
+      <workItem from="1678717039984" duration="2624000" />
+      <workItem from="1678805402579" duration="5128000" />
+      <workItem from="1678962888095" duration="2009000" />
+      <workItem from="1678965149593" duration="3434000" />
+      <workItem from="1679028986082" duration="1221000" />
+      <workItem from="1679048966202" duration="3758000" />
+      <workItem from="1679064450340" duration="3256000" />
+      <workItem from="1679114237419" duration="7552000" />
+      <workItem from="1679152664580" duration="9236000" />
+      <workItem from="1679217515368" duration="923000" />
+      <workItem from="1679219230968" duration="9392000" />
+      <workItem from="1679308853779" duration="318000" />
+      <workItem from="1679309518689" duration="4600000" />
+      <workItem from="1679314179890" duration="950000" />
+      <workItem from="1679468374052" duration="3146000" />
+      <workItem from="1679481277028" duration="3417000" />
+      <workItem from="1679484720666" duration="1423000" />
+      <workItem from="1679536060438" duration="5041000" />
+      <workItem from="1679582317062" duration="309000" />
+      <workItem from="1679634103639" duration="3831000" />
+      <workItem from="1679641455645" duration="3774000" />
+      <workItem from="1679708916392" duration="11941000" />
+      <workItem from="1679810192592" duration="3120000" />
+      <workItem from="1679817580217" duration="11725000" />
+      <workItem from="1679885619462" duration="3796000" />
+      <workItem from="1679914153469" duration="4001000" />
+      <workItem from="1679921096908" duration="7252000" />
+      <workItem from="1679972940025" duration="5852000" />
+      <workItem from="1679983949354" duration="954000" />
+      <workItem from="1680000384145" duration="1400000" />
+      <workItem from="1680003269771" duration="2806000" />
+      <workItem from="1680013543944" duration="3744000" />
+      <workItem from="1680017830148" duration="174000" />
+      <workItem from="1680101733503" duration="2207000" />
+      <workItem from="1680230355665" duration="16270000" />
+      <workItem from="1680352583636" duration="1696000" />
+    </task>
+    <task id="LOCAL-00001" summary="[feat] 增加注释">
+      <created>1678338154422</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1678338154422</updated>
+    </task>
+    <task id="LOCAL-00002" summary="[feat] 增加注释">
+      <created>1678605150010</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1678605150010</updated>
+    </task>
+    <task id="LOCAL-00003" summary="[feat] 增加注释">
+      <created>1678808232444</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1678808232444</updated>
+    </task>
+    <task id="LOCAL-00004" summary="[feat] 增加注释">
+      <created>1678964456671</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1678964456671</updated>
+    </task>
+    <task id="LOCAL-00005" summary="[feat] 增加注释">
+      <created>1679148746357</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1679148746357</updated>
+    </task>
+    <task id="LOCAL-00006" summary="[feat] 增加注释">
+      <created>1679314317687</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1679314317687</updated>
+    </task>
+    <task id="LOCAL-00007" summary="[feat] 增加注释">
+      <created>1679927068294</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1679927068294</updated>
+    </task>
+    <task id="LOCAL-00008" summary="[feat] 增加注释">
+      <created>1680238210811</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1680238210811</updated>
+    </task>
+    <task id="LOCAL-00009" summary="[feat] 增加注释">
+      <created>1680238301936</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1680238301936</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="UnityCheckinConfiguration" checkUnsavedScenes="true" />
+  <component name="UnityUnitTestConfiguration" currentTestLauncher="NUnit" />
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
+    <MESSAGE value="[feat] 增加注释" />
+    <option name="LAST_COMMIT_MESSAGE" value="[feat] 增加注释" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="NONE" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/UnityEngine.UI/UI/Core/Graphic.cs</url>
+          <line>602</line>
+          <properties documentPath="$PROJECT_DIR$/UnityEngine.UI/UI/Core/Graphic.cs" initialLine="598" containingFunctionPresentation="method 'UpdateMaterial'">
+            <startOffsets>
+              <option value="20457" />
+            </startOffsets>
+            <endOffsets>
+              <option value="20473" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/UnityEngine.UI/UI/Core/Graphic.cs</url>
+          <line>607</line>
+          <properties documentPath="$PROJECT_DIR$/UnityEngine.UI/UI/Core/Graphic.cs" initialLine="603" containingFunctionPresentation="method 'UpdateMaterial'">
+            <startOffsets>
+              <option value="20622" />
+            </startOffsets>
+            <endOffsets>
+              <option value="20661" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/UnityEngine.UI/EventSystem/InputModules/StandaloneInputModule.cs</url>
+          <line>307</line>
+          <properties documentPath="$PROJECT_DIR$/UnityEngine.UI/EventSystem/InputModules/StandaloneInputModule.cs" initialLine="304" containingFunctionPresentation="method 'ProcessTouchEvents'">
+            <startOffsets>
+              <option value="10947" />
+            </startOffsets>
+            <endOffsets>
+              <option value="10989" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/UnityEngine.UI/EventSystem/InputModules/StandaloneInputModule.cs</url>
+          <line>290</line>
+          <properties documentPath="$PROJECT_DIR$/UnityEngine.UI/EventSystem/InputModules/StandaloneInputModule.cs" initialLine="289" containingFunctionPresentation="method 'Process'">
+            <startOffsets>
+              <option value="10364" />
+            </startOffsets>
+            <endOffsets>
+              <option value="10412" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="4" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
+  </component>
+</project>

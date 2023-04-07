@@ -1,0 +1,497 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="StickySelectionHighlights">
+    <option name="editorHighlights">
+      <map>
+        <entry key="$PROJECT_DIR$/UnityEngine.UI/EventSystem/InputModules/BaseInputModule.cs">
+          <value>
+            <PaintGroupHighlightMap>
+              <option name="paintGroups">
+                <map>
+                  <entry key="0">
+                    <value>
+                      <EditorHighlightsForPaintGroup>
+                        <option name="highlights">
+                          <list>
+                            <HighlightOffset>
+                              <option name="start" value="1247" />
+                              <option name="end" value="1262" />
+                            </HighlightOffset>
+                            <HighlightOffset>
+                              <option name="start" value="7218" />
+                              <option name="end" value="7233" />
+                            </HighlightOffset>
+                            <HighlightOffset>
+                              <option name="start" value="8386" />
+                              <option name="end" value="8401" />
+                            </HighlightOffset>
+                            <HighlightOffset>
+                              <option name="start" value="8968" />
+                              <option name="end" value="8983" />
+                            </HighlightOffset>
+                            <HighlightOffset>
+                              <option name="start" value="1177" />
+                              <option name="end" value="1190" />
+                            </HighlightOffset>
+                            <HighlightOffset>
+                              <option name="start" value="1249" />
+                              <option name="end" value="1262" />
+                            </HighlightOffset>
+                            <HighlightOffset>
+                              <option name="start" value="7147" />
+                              <option name="end" value="7160" />
+                            </HighlightOffset>
+                            <HighlightOffset>
+                              <option name="start" value="7220" />
+                              <option name="end" value="7233" />
+                            </HighlightOffset>
+                            <HighlightOffset>
+                              <option name="start" value="8332" />
+                              <option name="end" value="8345" />
+                            </HighlightOffset>
+                            <HighlightOffset>
+                              <option name="start" value="8388" />
+                              <option name="end" value="8401" />
+                            </HighlightOffset>
+                            <HighlightOffset>
+                              <option name="start" value="8914" />
+                              <option name="end" value="8927" />
+                            </HighlightOffset>
+                            <HighlightOffset>
+                              <option name="start" value="8970" />
+                              <option name="end" value="8983" />
+                            </HighlightOffset>
+                          </list>
+                        </option>
+                      </EditorHighlightsForPaintGroup>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </PaintGroupHighlightMap>
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/UnityEngine.UI/EventSystem/InputModules/StandaloneInputModule.cs">
+          <value>
+            <PaintGroupHighlightMap>
+              <option name="paintGroups">
+                <map>
+                  <entry key="0">
+                    <value>
+                      <EditorHighlightsForPaintGroup>
+                        <option name="highlights">
+                          <list>
+                            <HighlightOffset>
+                              <option name="start" value="6212" />
+                              <option name="end" value="6226" />
+                            </HighlightOffset>
+                            <HighlightOffset>
+                              <option name="start" value="6275" />
+                              <option name="end" value="6289" />
+                            </HighlightOffset>
+                            <HighlightOffset>
+                              <option name="start" value="6344" />
+                              <option name="end" value="6358" />
+                            </HighlightOffset>
+                            <HighlightOffset>
+                              <option name="start" value="6583" />
+                              <option name="end" value="6597" />
+                            </HighlightOffset>
+                            <HighlightOffset>
+                              <option name="start" value="6646" />
+                              <option name="end" value="6660" />
+                            </HighlightOffset>
+                            <HighlightOffset>
+                              <option name="start" value="6806" />
+                              <option name="end" value="6820" />
+                            </HighlightOffset>
+                            <HighlightOffset>
+                              <option name="start" value="6866" />
+                              <option name="end" value="6880" />
+                            </HighlightOffset>
+                            <HighlightOffset>
+                              <option name="start" value="7147" />
+                              <option name="end" value="7161" />
+                            </HighlightOffset>
+                            <HighlightOffset>
+                              <option name="start" value="7209" />
+                              <option name="end" value="7223" />
+                            </HighlightOffset>
+                            <HighlightOffset>
+                              <option name="start" value="10019" />
+                              <option name="end" value="10033" />
+                            </HighlightOffset>
+                            <HighlightOffset>
+                              <option name="start" value="14142" />
+                              <option name="end" value="14156" />
+                            </HighlightOffset>
+                            <HighlightOffset>
+                              <option name="start" value="14202" />
+                              <option name="end" value="14216" />
+                            </HighlightOffset>
+                            <HighlightOffset>
+                              <option name="start" value="14387" />
+                              <option name="end" value="14401" />
+                            </HighlightOffset>
+                            <HighlightOffset>
+                              <option name="start" value="15512" />
+                              <option name="end" value="15526" />
+                            </HighlightOffset>
+                            <HighlightOffset>
+                              <option name="start" value="15647" />
+                              <option name="end" value="15661" />
+                            </HighlightOffset>
+                            <HighlightOffset>
+                              <option name="start" value="15709" />
+                              <option name="end" value="15723" />
+                            </HighlightOffset>
+                            <HighlightOffset>
+                              <option name="start" value="16054" />
+                              <option name="end" value="16068" />
+                            </HighlightOffset>
+                            <HighlightOffset>
+                              <option name="start" value="16117" />
+                              <option name="end" value="16131" />
+                            </HighlightOffset>
+                            <HighlightOffset>
+                              <option name="start" value="16342" />
+                              <option name="end" value="16356" />
+                            </HighlightOffset>
+                            <HighlightOffset>
+                              <option name="start" value="16598" />
+                              <option name="end" value="16612" />
+                            </HighlightOffset>
+                            <HighlightOffset>
+                              <option name="start" value="16661" />
+                              <option name="end" value="16675" />
+                            </HighlightOffset>
+                            <HighlightOffset>
+                              <option name="start" value="16837" />
+                              <option name="end" value="16851" />
+                            </HighlightOffset>
+                            <HighlightOffset>
+                              <option name="start" value="16897" />
+                              <option name="end" value="16911" />
+                            </HighlightOffset>
+                            <HighlightOffset>
+                              <option name="start" value="17202" />
+                              <option name="end" value="17216" />
+                            </HighlightOffset>
+                            <HighlightOffset>
+                              <option name="start" value="17264" />
+                              <option name="end" value="17278" />
+                            </HighlightOffset>
+                            <HighlightOffset>
+                              <option name="start" value="17501" />
+                              <option name="end" value="17515" />
+                            </HighlightOffset>
+                            <HighlightOffset>
+                              <option name="start" value="17573" />
+                              <option name="end" value="17587" />
+                            </HighlightOffset>
+                            <HighlightOffset>
+                              <option name="start" value="18238" />
+                              <option name="end" value="18252" />
+                            </HighlightOffset>
+                            <HighlightOffset>
+                              <option name="start" value="18305" />
+                              <option name="end" value="18319" />
+                            </HighlightOffset>
+                            <HighlightOffset>
+                              <option name="start" value="18405" />
+                              <option name="end" value="18419" />
+                            </HighlightOffset>
+                            <HighlightOffset>
+                              <option name="start" value="18472" />
+                              <option name="end" value="18486" />
+                            </HighlightOffset>
+                            <HighlightOffset>
+                              <option name="start" value="20582" />
+                              <option name="end" value="20596" />
+                            </HighlightOffset>
+                            <HighlightOffset>
+                              <option name="start" value="20658" />
+                              <option name="end" value="20672" />
+                            </HighlightOffset>
+                            <HighlightOffset>
+                              <option name="start" value="22652" />
+                              <option name="end" value="22666" />
+                            </HighlightOffset>
+                            <HighlightOffset>
+                              <option name="start" value="22775" />
+                              <option name="end" value="22789" />
+                            </HighlightOffset>
+                            <HighlightOffset>
+                              <option name="start" value="22848" />
+                              <option name="end" value="22862" />
+                            </HighlightOffset>
+                            <HighlightOffset>
+                              <option name="start" value="23190" />
+                              <option name="end" value="23204" />
+                            </HighlightOffset>
+                            <HighlightOffset>
+                              <option name="start" value="23257" />
+                              <option name="end" value="23271" />
+                            </HighlightOffset>
+                            <HighlightOffset>
+                              <option name="start" value="24414" />
+                              <option name="end" value="24428" />
+                            </HighlightOffset>
+                            <HighlightOffset>
+                              <option name="start" value="24474" />
+                              <option name="end" value="24488" />
+                            </HighlightOffset>
+                            <HighlightOffset>
+                              <option name="start" value="24659" />
+                              <option name="end" value="24673" />
+                            </HighlightOffset>
+                            <HighlightOffset>
+                              <option name="start" value="25582" />
+                              <option name="end" value="25596" />
+                            </HighlightOffset>
+                            <HighlightOffset>
+                              <option name="start" value="25717" />
+                              <option name="end" value="25731" />
+                            </HighlightOffset>
+                            <HighlightOffset>
+                              <option name="start" value="25779" />
+                              <option name="end" value="25793" />
+                            </HighlightOffset>
+                          </list>
+                        </option>
+                      </EditorHighlightsForPaintGroup>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </PaintGroupHighlightMap>
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/UnityEngine.UI/UI/Core/InputField.cs">
+          <value>
+            <PaintGroupHighlightMap>
+              <option name="paintGroups">
+                <map>
+                  <entry key="0">
+                    <value>
+                      <EditorHighlightsForPaintGroup>
+                        <option name="highlights">
+                          <list>
+                            <HighlightOffset>
+                              <option name="start" value="48582" />
+                              <option name="end" value="48592" />
+                            </HighlightOffset>
+                            <HighlightOffset>
+                              <option name="start" value="49595" />
+                              <option name="end" value="49605" />
+                            </HighlightOffset>
+                            <HighlightOffset>
+                              <option name="start" value="51221" />
+                              <option name="end" value="51231" />
+                            </HighlightOffset>
+                            <HighlightOffset>
+                              <option name="start" value="112119" />
+                              <option name="end" value="112129" />
+                            </HighlightOffset>
+                            <HighlightOffset>
+                              <option name="start" value="112218" />
+                              <option name="end" value="112228" />
+                            </HighlightOffset>
+                            <HighlightOffset>
+                              <option name="start" value="7442" />
+                              <option name="end" value="7452" />
+                            </HighlightOffset>
+                            <HighlightOffset>
+                              <option name="start" value="8270" />
+                              <option name="end" value="8280" />
+                            </HighlightOffset>
+                            <HighlightOffset>
+                              <option name="start" value="16743" />
+                              <option name="end" value="16753" />
+                            </HighlightOffset>
+                            <HighlightOffset>
+                              <option name="start" value="16779" />
+                              <option name="end" value="16789" />
+                            </HighlightOffset>
+                            <HighlightOffset>
+                              <option name="start" value="27770" />
+                              <option name="end" value="27780" />
+                            </HighlightOffset>
+                            <HighlightOffset>
+                              <option name="start" value="27814" />
+                              <option name="end" value="27824" />
+                            </HighlightOffset>
+                            <HighlightOffset>
+                              <option name="start" value="31444" />
+                              <option name="end" value="31454" />
+                            </HighlightOffset>
+                            <HighlightOffset>
+                              <option name="start" value="31653" />
+                              <option name="end" value="31663" />
+                            </HighlightOffset>
+                            <HighlightOffset>
+                              <option name="start" value="31754" />
+                              <option name="end" value="31764" />
+                            </HighlightOffset>
+                            <HighlightOffset>
+                              <option name="start" value="46651" />
+                              <option name="end" value="46661" />
+                            </HighlightOffset>
+                            <HighlightOffset>
+                              <option name="start" value="48182" />
+                              <option name="end" value="48192" />
+                            </HighlightOffset>
+                            <HighlightOffset>
+                              <option name="start" value="48204" />
+                              <option name="end" value="48214" />
+                            </HighlightOffset>
+                            <HighlightOffset>
+                              <option name="start" value="48295" />
+                              <option name="end" value="48305" />
+                            </HighlightOffset>
+                            <HighlightOffset>
+                              <option name="start" value="48401" />
+                              <option name="end" value="48411" />
+                            </HighlightOffset>
+                            <HighlightOffset>
+                              <option name="start" value="48443" />
+                              <option name="end" value="48453" />
+                            </HighlightOffset>
+                            <HighlightOffset>
+                              <option name="start" value="48664" />
+                              <option name="end" value="48674" />
+                            </HighlightOffset>
+                            <HighlightOffset>
+                              <option name="start" value="48797" />
+                              <option name="end" value="48807" />
+                            </HighlightOffset>
+                            <HighlightOffset>
+                              <option name="start" value="49540" />
+                              <option name="end" value="49550" />
+                            </HighlightOffset>
+                            <HighlightOffset>
+                              <option name="start" value="49949" />
+                              <option name="end" value="49959" />
+                            </HighlightOffset>
+                            <HighlightOffset>
+                              <option name="start" value="50511" />
+                              <option name="end" value="50521" />
+                            </HighlightOffset>
+                            <HighlightOffset>
+                              <option name="start" value="50668" />
+                              <option name="end" value="50678" />
+                            </HighlightOffset>
+                            <HighlightOffset>
+                              <option name="start" value="50726" />
+                              <option name="end" value="50736" />
+                            </HighlightOffset>
+                            <HighlightOffset>
+                              <option name="start" value="50874" />
+                              <option name="end" value="50884" />
+                            </HighlightOffset>
+                            <HighlightOffset>
+                              <option name="start" value="51013" />
+                              <option name="end" value="51023" />
+                            </HighlightOffset>
+                            <HighlightOffset>
+                              <option name="start" value="51104" />
+                              <option name="end" value="51114" />
+                            </HighlightOffset>
+                            <HighlightOffset>
+                              <option name="start" value="58831" />
+                              <option name="end" value="58841" />
+                            </HighlightOffset>
+                            <HighlightOffset>
+                              <option name="start" value="58854" />
+                              <option name="end" value="58864" />
+                            </HighlightOffset>
+                            <HighlightOffset>
+                              <option name="start" value="77032" />
+                              <option name="end" value="77042" />
+                            </HighlightOffset>
+                            <HighlightOffset>
+                              <option name="start" value="77102" />
+                              <option name="end" value="77112" />
+                            </HighlightOffset>
+                            <HighlightOffset>
+                              <option name="start" value="107517" />
+                              <option name="end" value="107527" />
+                            </HighlightOffset>
+                            <HighlightOffset>
+                              <option name="start" value="107540" />
+                              <option name="end" value="107550" />
+                            </HighlightOffset>
+                            <HighlightOffset>
+                              <option name="start" value="107597" />
+                              <option name="end" value="107607" />
+                            </HighlightOffset>
+                            <HighlightOffset>
+                              <option name="start" value="107643" />
+                              <option name="end" value="107653" />
+                            </HighlightOffset>
+                            <HighlightOffset>
+                              <option name="start" value="108272" />
+                              <option name="end" value="108282" />
+                            </HighlightOffset>
+                            <HighlightOffset>
+                              <option name="start" value="111524" />
+                              <option name="end" value="111534" />
+                            </HighlightOffset>
+                            <HighlightOffset>
+                              <option name="start" value="111582" />
+                              <option name="end" value="111592" />
+                            </HighlightOffset>
+                            <HighlightOffset>
+                              <option name="start" value="111629" />
+                              <option name="end" value="111639" />
+                            </HighlightOffset>
+                            <HighlightOffset>
+                              <option name="start" value="112793" />
+                              <option name="end" value="112803" />
+                            </HighlightOffset>
+                            <HighlightOffset>
+                              <option name="start" value="113171" />
+                              <option name="end" value="113181" />
+                            </HighlightOffset>
+                            <HighlightOffset>
+                              <option name="start" value="113530" />
+                              <option name="end" value="113540" />
+                            </HighlightOffset>
+                            <HighlightOffset>
+                              <option name="start" value="113894" />
+                              <option name="end" value="113904" />
+                            </HighlightOffset>
+                            <HighlightOffset>
+                              <option name="start" value="114269" />
+                              <option name="end" value="114279" />
+                            </HighlightOffset>
+                            <HighlightOffset>
+                              <option name="start" value="114632" />
+                              <option name="end" value="114642" />
+                            </HighlightOffset>
+                            <HighlightOffset>
+                              <option name="start" value="114995" />
+                              <option name="end" value="115005" />
+                            </HighlightOffset>
+                            <HighlightOffset>
+                              <option name="start" value="115362" />
+                              <option name="end" value="115372" />
+                            </HighlightOffset>
+                            <HighlightOffset>
+                              <option name="start" value="115711" />
+                              <option name="end" value="115721" />
+                            </HighlightOffset>
+                          </list>
+                        </option>
+                      </EditorHighlightsForPaintGroup>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </PaintGroupHighlightMap>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>
